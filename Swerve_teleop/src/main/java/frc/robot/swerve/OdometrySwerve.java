@@ -4,7 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import frc.robot.utils.HardwareMap;
+import frc.robot.Utils.HardwareMap;
 
 public class OdometrySwerve {
     public final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
