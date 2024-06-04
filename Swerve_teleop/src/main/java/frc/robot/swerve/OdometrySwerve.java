@@ -3,8 +3,9 @@ package frc.robot.swerve;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import frc.robot.Utils.HardwareMap;
+import frc.robot.utils.HardwareMap;
 
 public class OdometrySwerve {
     public final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
@@ -12,15 +13,21 @@ public class OdometrySwerve {
     Pose2d initial_pose;
     public SwerveDriveOdometry robot_odometry;
     Chassis chassis;
+    public SwerveModuleState[] real_module_states = {
+        HardwareMap.frontLeft.getState(),
+        HardwareMap.frontRight.getState(),
+        HardwareMap.backLeft.getState(),
+        HardwareMap.backRight.getState(),
+    };
 
     public void initialize(){
         robot_odometry = new SwerveDriveOdometry(
             chassis.robot_kinematics, m_gyro.getRotation2d(),
             new SwerveModulePosition[] {
                 HardwareMap.frontLeft.getPosition(),
-                HardwareMap.frontLeft.getPosition(),
-                HardwareMap.frontLeft.getPosition(),
-                HardwareMap.frontLeft.getPosition()
+                HardwareMap.frontRight.getPosition(),
+                HardwareMap.backLeft.getPosition(),
+                HardwareMap.backRight.getPosition()
             }, initial_pose);
     }
 
@@ -40,4 +47,6 @@ public class OdometrySwerve {
             HardwareMap.backRight.getPosition()
         });
     }
+
+    
 }

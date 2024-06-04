@@ -5,8 +5,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import frc.robot.Utils.Constants;
-import frc.robot.Utils.HardwareMap;
+import frc.robot.utils.Constants;
+import frc.robot.utils.HardwareMap;
 
 public class Chassis {
 
@@ -28,45 +28,6 @@ public class Chassis {
     // Convert to module states
     public SwerveModuleState[] moduleStates;
 
-    private SwerveModuleState[] updateModuleStates(){
-
-        // Convert to module states
-        moduleStates = robot_kinematics.toSwerveModuleStates(speeds);
-
-        // Front left module state
-        SwerveModuleState frontLeft = moduleStates[0];
-
-        // Front right module state
-        SwerveModuleState frontRight = moduleStates[1];
-
-        // Back left module state
-        SwerveModuleState backLeft = moduleStates[2];
-
-        // Back right module state
-        SwerveModuleState backRight = moduleStates[3];
-
-        SwerveModuleState frontLeftOptimized = SwerveModuleState.optimize(frontLeft,
-            gyroAngle);
-        
-        SwerveModuleState frontRightOptimized = SwerveModuleState.optimize(frontRight,
-            gyroAngle);
-        
-        SwerveModuleState backLeftOptimized = SwerveModuleState.optimize(backLeft,
-            gyroAngle);
-        
-        SwerveModuleState backRightOptimized = SwerveModuleState.optimize(backRight,
-            gyroAngle);
-        
-        moduleStates = new SwerveModuleState[]{
-            frontLeftOptimized, 
-            frontRightOptimized,
-            backLeftOptimized,
-            backRightOptimized
-        };
-
-        return moduleStates;
-    }
-
     public void drive(double x, double y, double z,boolean field_oriented){
         gyroAngle = m_gyro.getRotation2d();
 
@@ -82,7 +43,7 @@ public class Chassis {
         speeds.vyMetersPerSecond = y;
         speeds.omegaRadiansPerSecond = z;
 
-        updateModuleStates();
+        moduleStates = robot_kinematics.toSwerveModuleStates(speeds);
 
         SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.MAX_SPEED);
         HardwareMap.frontLeft.setDesiredState(moduleStates[0]);

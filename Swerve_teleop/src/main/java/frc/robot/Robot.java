@@ -32,6 +32,10 @@ public class Robot extends TimedRobot {
   StructArrayPublisher<SwerveModuleState> swerve_state_publisher = NetworkTableInstance.getDefault()
         .getStructArrayTopic("MyStates", SwerveModuleState.struct).publish();
 
+  StructArrayPublisher<SwerveModuleState> swerve_desired_state_publisher = NetworkTableInstance.getDefault()
+        .getStructArrayTopic("desiredStates", SwerveModuleState.struct).publish();
+
+
   StructPublisher<Pose2d> odometry_publisher = NetworkTableInstance.getDefault()
     .getStructTopic("MyPose", Pose2d.struct).publish();
 
@@ -43,7 +47,8 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     // WPILib
         swerve_odometry.updateOdometry();
-        swerve_state_publisher.set(swerve.moduleStates);
+        swerve_state_publisher.set(swerve_odometry.real_module_states);
+        swerve_desired_state_publisher.set(swerve.moduleStates);
         odometry_publisher.set(swerve_odometry.robot_odometry.getPoseMeters());
   }
 
