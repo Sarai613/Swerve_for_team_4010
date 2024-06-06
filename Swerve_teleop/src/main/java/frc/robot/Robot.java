@@ -95,7 +95,7 @@ public class Robot extends TimedRobot {
     // the right by default.
     final var rot =
         -rotLimiter.calculate(MathUtil.applyDeadband(controller.getRightX(), 0.02))
-            * Constants.MAX_ANGULAR_VELOCITY;
+            * Constants.MAX_SPEED;
 
     swerve.drive(xSpeed, ySpeed, rot, field_relative);
   }

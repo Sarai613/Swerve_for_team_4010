@@ -3,14 +3,11 @@ package frc.robot.swerve;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkBase.ControlType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.trajectory.ExponentialProfile.State;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.utilidades.Constants;
 
@@ -18,8 +15,8 @@ public class SwerveModule {
 
     private final CANSparkMax drive_motor;
     private final CANSparkMax turning_motor;
-    private final CANEncoder drive_encoder;
-    private final CANEncoder turning_encoder;
+    private final RelativeEncoder drive_encoder;
+    private final RelativeEncoder turning_encoder;
     private final PIDController turning_PID_controller;
     private final int drive_spark_id;
     private final int turning_spark_id;
@@ -87,7 +84,7 @@ public class SwerveModule {
         double turning_motor_position = turning_encoder.getPosition();
         drive_motor.set(state.speedMetersPerSecond / Constants.MAX_SPEED);
         turning_motor.set(turning_PID_controller.calculate(turning_motor_position, state.angle.getRadians()));
-        SmartDashboard.putString("SwerveModule[" + drive_spark_id + turning_spark_id + "] state: " + state.toString());
+        SmartDashboard.putString("Debug", "SwerveModule[" + Integer.toString(drive_spark_id) + ", " + Integer.toString(turning_spark_id) + "] state: " + state.toString());
 
 
         
