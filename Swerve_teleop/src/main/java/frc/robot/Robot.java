@@ -7,23 +7,26 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.Autonomous.Trayectories.output.TrajectoryFollower;
 import frc.robot.swerve.Chassis;
-import frc.robot.swerve.OdometrySwerve;
+import frc.robot.swerve.SwerveSubsystem;
 import frc.robot.utilidades.Constants;
 
 
 public class Robot extends TimedRobot {
   private final XboxController controller = new XboxController(0);
   private final Chassis swerve = new Chassis();
-  private final OdometrySwerve swerve_odometry = new OdometrySwerve(swerve, new Pose2d(0,0, new Rotation2d()));
-
+  private final SwerveSubsystem swerve_odometry = new SwerveSubsystem();
+  TrajectoryFollower trajectoryFollower = new TrajectoryFollower(swerve, swerve_odometry);
+  Command command;
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
   private final SlewRateLimiter xspeedLimiter = new SlewRateLimiter(3);
   private final SlewRateLimiter yspeedLimiter = new SlewRateLimiter(3);
@@ -43,30 +46,32 @@ public class Robot extends TimedRobot {
     .getStructArrayTopic("MyPoseArray", Pose2d.struct).publish();
 
     
+
+  @Override
+  public void robotInit(){
+    swerve_odometry.zeroHeading();
+  }
+
   @Override
   public void robotPeriodic() {
     // WPILib
         swerve_odometry.updateOdometry();
-        swerve_state_publisher.set(swerve_odometry.real_module_states);
+        swerve_odometry.updateModuleStates();
+        swerve_state_publisher.set(swerve_odometry.swerve_module_states);
         swerve_desired_state_publisher.set(swerve.moduleStates);
-        odometry_publisher.set(swerve_odometry.robot_odometry.getPoseMeters());
+        odometry_publisher.set(swerve_odometry.getPose());
   }
 
-  /**
-   * This autonomous (along with the chooser code above) shows how to select between different
-   * autonomous modes using the dashboard. The sendable chooser code works with the Java
-   * SmartDashboard. If you prefer the LabVIEW Dashboard, remove all of the chooser code and
-   * uncomment the getString line to get the auto name from the text box below the Gyro
-   *
-   * <p>You can add additional auto modes by adding additional comparisons to the switch structure
-   * below with additional strings. If using the SendableChooser make sure to add them to the
-   * chooser code above as well.
-   */
+  @Override
+  public void autonomousInit(){
+    command = trajectoryFollower.getAutonomousCommand();
+    command.schedule();
+  }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    driveWithJoystick(false);
+    CommandScheduler.getInstance().run();
   }
 
   /** This function is called periodically during operator control. */
@@ -79,14 +84,14 @@ public class Robot extends TimedRobot {
     // Get the x speed. We are inverting this because Xbox controllers return
     // negative values when we push forward.
     final var xSpeed =
-        -xspeedLimiter.calculate(MathUtil.applyDeadband(controller.getLeftY(), 0.02))
+        -xspeedLimiter.calculate(MathUtil.applyDeadband(controller.getLeftY(), Constants.JOYSTICK_DEADZONE))
             * Constants.MAX_SPEED;
 
     // Get the y speed or sideways/strafe speed. We are inverting this because
     // we want a positive value when we pull to the left. Xbox controllers
     // return positive values when you pull to the right by default.
     final var ySpeed =
-        -yspeedLimiter.calculate(MathUtil.applyDeadband(controller.getLeftX(), 0.02))
+        -yspeedLimiter.calculate(MathUtil.applyDeadband(controller.getLeftX(), Constants.JOYSTICK_DEADZONE))
             * Constants.MAX_SPEED;
 
     // Get the rate of angular rotation. We are inverting this because we want a
@@ -94,8 +99,8 @@ public class Robot extends TimedRobot {
     // mathematics). Xbox controllers return positive values when you pull to
     // the right by default.
     final var rot =
-        -rotLimiter.calculate(MathUtil.applyDeadband(controller.getRightX(), 0.02))
-            * Constants.MAX_SPEED;
+        -rotLimiter.calculate(MathUtil.applyDeadband(controller.getRightX(), Constants.JOYSTICK_DEADZONE))
+            * Constants.MAX_ANGULAR_SPEED;
 
     swerve.drive(xSpeed, ySpeed, rot, field_relative);
   }

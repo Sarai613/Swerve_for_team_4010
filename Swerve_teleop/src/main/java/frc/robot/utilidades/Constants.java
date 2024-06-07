@@ -1,16 +1,23 @@
 package frc.robot.utilidades;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 public class Constants {
-    public static final double MAX_SPEED = 3.657599994440448; // in meters per second
-    public static final double DISTANCE_BETWEEN_WHEELS_AND_THE_CENTER = 28;
-    public static final double WHEEL_DIAMETER = 20; //in mm
-    public static final double DISTANCE_PER_ROTATION = Math.PI * WHEEL_DIAMETER * 1000 / 8.14; //in meters
-    public static final double TURNING_ENCODER_ROT_2_RAD = 1/12.8 * 2 * Math.PI;
-    public static final double TURNING_ENCODER_RPM_2_RAD_PER_SECOND = 8.6 * TURNING_ENCODER_ROT_2_RAD;
+    public static final double WHEEL_DIAMETER = 50.17 * 2; //in mm
+    public static final double DISTANCE_BETWEEN_WHEELS_AND_THE_CENTER = .28; //in meters
+    public static final double DRIVE_MOTOR_GEAR_RATIO = 1/8.14;
+    public static final double RPM = 5676;
+    public static final double TURNING_MOTOR_GEAR_RATIO = 1/12.8;
+    public static final double MAX_SPEED = 3.6576; // in m/s
+    public static final double MAX_ACCELERATION = 1; // in m/s2
+    public static final double MAX_ANGULAR_SPEED = RPM * TURNING_MOTOR_GEAR_RATIO / 60 * 2 * Math.PI; // in radians per second
+    public static final double DRIVE_ENCODER_ROT_2_METER = DRIVE_MOTOR_GEAR_RATIO * Math.PI * WHEEL_DIAMETER;
+    public static final double DRIVE_ENCODER_RPM_2_METERS_PER_SECOND = DRIVE_ENCODER_ROT_2_METER / 60; //in meters
+    public static final double TURNING_ENCODER_ROT_2_RAD = TURNING_MOTOR_GEAR_RATIO * 2 * Math.PI;
+    public static final double TURNING_ENCODER_RPM_2_RAD_PER_SECOND = TURNING_ENCODER_ROT_2_RAD / 60;
     public static final double P = 0.5; //PID P value
-    public static final double JOYSTICK_DEADZONE = 0.1;//this value most be beetwen 0 and 1
+    public static final double JOYSTICK_DEADZONE = 0.09;//this value most be beetwen 0 and 1
 
 
     // Locations for the swerve drive modules relative to the robot center.
@@ -19,4 +26,19 @@ public class Constants {
     public static final Translation2d BACK_LEFT_LOCATION = new Translation2d(-DISTANCE_BETWEEN_WHEELS_AND_THE_CENTER, DISTANCE_BETWEEN_WHEELS_AND_THE_CENTER);
     public static final Translation2d BACK_RIGHT_LOCATION = new Translation2d(-DISTANCE_BETWEEN_WHEELS_AND_THE_CENTER, -DISTANCE_BETWEEN_WHEELS_AND_THE_CENTER);
     public static final Translation2d ORIGIN = new Translation2d(0, 0);
+
+    // Autonomous constants
+    public static double AUTONOMOUS_P_X = .5;
+    public static double AUTONOMOUS_P_Y = .5;
+    public static double AUTONOMOUS_P_Z = .5;
+    public static double AUTONOMOUS_MAX_ACCELERATION = 1;
+    public static double AUTONOMOUS_MAX_SPEED = 2;
+    public static final double AUTONOMOUS_MAX_ANGULAR_ACCELERATION = .5;
+    public static final double AUTONOMOUS_MAX_ANGULAR_SPEED = .5;
+
+    // The TrapezoidProfile is used for stablish a limit for the angular speed and acceleration of the turning motor
+    public static TrapezoidProfile.Constraints AUTONOMOUS_Z_CONSTRAIT = 
+        new TrapezoidProfile.Constraints(
+            AUTONOMOUS_MAX_ANGULAR_SPEED,
+            AUTONOMOUS_MAX_ANGULAR_ACCELERATION);
 }
