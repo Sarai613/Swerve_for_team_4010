@@ -37,36 +37,43 @@ public class SwerveSubsystem extends SubsystemBase{
         new Thread(() -> {
             try {
                 Thread.sleep(1000);
-                zeroHeading();
+                zeroHeading(); // Reset the gyroscope When the robot is initialized
             } catch (Exception e) {
             }
         }).start();
     }
 
+    // Reset the gyroscope
     public void zeroHeading() {
         gyro.reset();
     }
 
+    // Returns the actual robot angle
     public double getHeading() {
         return Math.IEEEremainder(gyro.getAngle(), 360);
     }
 
+    // Returns a Rotation2d class with the robot angle
     public Rotation2d getRotation2d() {
         return Rotation2d.fromDegrees(getHeading());
     }
 
+    // Return actual robot position
     public Pose2d getPose() {
         return odometer.getPoseMeters();
     }
 
+    // Resets the Odometer
     public void resetOdometry(Pose2d pose) {
         odometer.resetPosition(getRotation2d(), swerve_module_position, pose);
     }
 
+    // Updates the Odometer
     public void updateOdometry(){
         odometer.update(getRotation2d(), swerve_module_position);
     }
-
+    
+    // Update the module states reading
     public void updateModuleStates(){
         swerve_module_states[0] = HardwareMap.frontLeft.getState();
         swerve_module_states[1] = HardwareMap.frontRight.getState();
@@ -75,12 +82,14 @@ public class SwerveSubsystem extends SubsystemBase{
     }
 
     @Override
+    // This repeat periodically during the subsystem use
     public void periodic() {
         updateOdometry();
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
     }
 
+    // Stop the swerve modules
     public void stopModules() {
         HardwareMap.frontLeft.stop();
         HardwareMap.frontRight.stop();
@@ -88,6 +97,7 @@ public class SwerveSubsystem extends SubsystemBase{
         HardwareMap.backRight.stop();
     }
 
+    // Set the desired state for each swerveModule by giving an array of states
     public void setStates(SwerveModuleState[] desired_states){
         SwerveDriveKinematics.desaturateWheelSpeeds(desired_states, Constants.MAX_SPEED);
         HardwareMap.frontLeft.setDesiredState(desired_states[0]);

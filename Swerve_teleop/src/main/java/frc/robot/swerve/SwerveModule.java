@@ -39,17 +39,21 @@ public class SwerveModule {
         drive_encoder = drive_motor.getEncoder();
         turning_encoder = turning_motor.getEncoder();
         
+        // Converts the encoder rotations into common units like meters per second
         drive_encoder.setPositionConversionFactor(Constants.DRIVE_ENCODER_RPM_2_METERS_PER_SECOND);
         drive_encoder.setVelocityConversionFactor(Constants.DRIVE_ENCODER_ROT_2_METER);
         turning_encoder.setPositionConversionFactor(Constants.TURNING_ENCODER_ROT_2_RAD);
         turning_encoder.setVelocityConversionFactor(Constants.TURNING_ENCODER_RPM_2_RAD_PER_SECOND);
 
+        // Assigns a pid controller for the turning motor. This one takes a P variable stablish in constants that specifies the proportional PID value
         turning_PID_controller = new PIDController(Constants.P, 0, 0);
         turning_PID_controller.enableContinuousInput(-Math.PI, Math.PI);
 
+        // Set The encoders into 0 position
         resetEncoders();
     }
 
+    // Returns a SwerveModuleState object with the module state
     public SwerveModuleState getState() {
         double driveSpeed = drive_encoder.getVelocity();
         double turningPosition = turning_encoder.getPosition();
@@ -57,6 +61,7 @@ public class SwerveModule {
         return new SwerveModuleState(driveSpeed, new Rotation2d(turningPosition));
     }
 
+    // Returns a SwerveModulePosition object with the actual modules position
     public SwerveModulePosition getPosition() {
         double driveDistance = drive_encoder.getPosition();
         double turningPosition = turning_encoder.getPosition();
@@ -64,16 +69,19 @@ public class SwerveModule {
         return new SwerveModulePosition(driveDistance, new Rotation2d(turningPosition));
     }
 
+    // Stablish the encoders into 0 position
     public void resetEncoders(){
         drive_encoder.setPosition(0);
-        turning_encoder.setPosition(getAbsoluteEncoderRad());
+        turning_encoder.setPosition(getAbsoluteEncoderRad()); // Calibrate the turning encoder with the absolute encoder
     }
 
+    // Stops the motors
     public void stop(){
         drive_motor.set(0);
         turning_motor.set(0);
     }
 
+    // Returns the absolute encoder actual radians
     public double getAbsoluteEncoderRad(){
         double angle = absolute_encoder.getVoltage() / RobotController.getVoltage5V();
         angle *= 2 * Math.PI;
@@ -81,13 +89,16 @@ public class SwerveModule {
         return angle;
     }
 
+    // Move the module by giving a SwerveModuleState object
     public void setDesiredState(SwerveModuleState desiredState) {
 
+        // Avoid auto alining while the robot is being operate
         if (Math.abs(desiredState.speedMetersPerSecond) < 0.09){
             stop();
             return;
         }
 
+        // The actual turning encoder rotation
         var encoder_rotation = new Rotation2d(turning_encoder.getPosition());
 
         // Optimiza el estado de referencia para evitar giros mayores a 90 grados
@@ -96,9 +107,16 @@ public class SwerveModule {
         // Escala la velocidad por el coseno del error angular
         state.speedMetersPerSecond *= state.angle.minus(encoder_rotation).getCos();
         
+        // The actual turning_motor_position
         double turning_motor_position = turning_encoder.getPosition();
+
+        // Assigns a speed to the drive motor
         drive_motor.set(state.speedMetersPerSecond / Constants.MAX_SPEED);
+
+        // Calculates the necessary set speed for turning the turning motor the specified angle
         turning_motor.set(turning_PID_controller.calculate(turning_motor_position, state.angle.getRadians()));
+
+        // Prints the swerve status
         SmartDashboard.putString("Debug", "SwerveModule[" + Integer.toString(drive_spark_id) + ", " + Integer.toString(turning_spark_id) + "] state: " + state.toString());
 
 

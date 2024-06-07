@@ -64,20 +64,21 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit(){
-    command = trajectoryFollower.getAutonomousCommand();
-    command.schedule();
+    command = trajectoryFollower.getAutonomousCommand(); // Gets the trajectory command
+    command.schedule(); // Schedules the trajectory command
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    CommandScheduler.getInstance().run();
+
+    CommandScheduler.getInstance().run(); // Runs the scheduled commands
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    driveWithJoystick(true);
+    driveWithJoystick(true); // This function transforms the joystick input into module states
   }
 
   private void driveWithJoystick(boolean field_relative) {

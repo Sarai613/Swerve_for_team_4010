@@ -30,11 +30,11 @@ public class Constants {
     // Autonomous constants
     public static double AUTONOMOUS_P_X = .5;
     public static double AUTONOMOUS_P_Y = .5;
-    public static double AUTONOMOUS_P_Z = .5;
+    public static double AUTONOMOUS_P_Z = .3;
     public static double AUTONOMOUS_MAX_ACCELERATION = 1;
-    public static double AUTONOMOUS_MAX_SPEED = 2;
+    public static double AUTONOMOUS_MAX_SPEED = MAX_SPEED * 0.2;
     public static final double AUTONOMOUS_MAX_ANGULAR_ACCELERATION = .5;
-    public static final double AUTONOMOUS_MAX_ANGULAR_SPEED = .5;
+    public static final double AUTONOMOUS_MAX_ANGULAR_SPEED = MAX_ANGULAR_SPEED * .5;
 
     // The TrapezoidProfile is used for stablish a limit for the angular speed and acceleration of the turning motor
     public static TrapezoidProfile.Constraints AUTONOMOUS_Z_CONSTRAIT = 
