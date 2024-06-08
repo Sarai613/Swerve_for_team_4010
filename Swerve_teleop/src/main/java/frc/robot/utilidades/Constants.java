@@ -16,7 +16,7 @@ public class Constants {
     public static final double DRIVE_ENCODER_RPM_2_METERS_PER_SECOND = DRIVE_ENCODER_ROT_2_METER / 60; //in meters
     public static final double TURNING_ENCODER_ROT_2_RAD = TURNING_MOTOR_GEAR_RATIO * 2 * Math.PI;
     public static final double TURNING_ENCODER_RPM_2_RAD_PER_SECOND = TURNING_ENCODER_ROT_2_RAD / 60;
-    public static final double P = 0.5; //PID P value
+    public static final double P = 0.217; //PID P value
     public static final double JOYSTICK_DEADZONE = 0.09;//this value most be beetwen 0 and 1
 
 
@@ -28,13 +28,19 @@ public class Constants {
     public static final Translation2d ORIGIN = new Translation2d(0, 0);
 
     // Autonomous constants
-    public static double AUTONOMOUS_P_X = .5;
-    public static double AUTONOMOUS_P_Y = .5;
-    public static double AUTONOMOUS_P_Z = .3;
+    public static double AUTONOMOUS_P_X = .35;
+    public static double AUTONOMOUS_I_X = 0;
+    public static double AUTONOMOUS_D_X = 0;
+    public static double AUTONOMOUS_P_Y = .35;
+    public static double AUTONOMOUS_I_Y = 0;
+    public static double AUTONOMOUS_D_Y = 0;
+    public static double AUTONOMOUS_P_Z = .35;
+    public static double AUTONOMOUS_I_Z = 0;
+    public static double AUTONOMOUS_D_Z = 0;
     public static double AUTONOMOUS_MAX_ACCELERATION = 1;
     public static double AUTONOMOUS_MAX_SPEED = MAX_SPEED * 0.2;
-    public static final double AUTONOMOUS_MAX_ANGULAR_ACCELERATION = .5;
-    public static final double AUTONOMOUS_MAX_ANGULAR_SPEED = MAX_ANGULAR_SPEED * .5;
+    public static final double AUTONOMOUS_MAX_ANGULAR_ACCELERATION = .1;
+    public static final double AUTONOMOUS_MAX_ANGULAR_SPEED = MAX_ANGULAR_SPEED * .1;
 
     // The TrapezoidProfile is used for stablish a limit for the angular speed and acceleration of the turning motor
     public static TrapezoidProfile.Constraints AUTONOMOUS_Z_CONSTRAIT = 

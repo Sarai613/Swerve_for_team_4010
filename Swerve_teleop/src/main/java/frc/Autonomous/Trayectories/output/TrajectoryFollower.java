@@ -19,7 +19,6 @@ import frc.robot.swerve.SwerveSubsystem;
 import frc.robot.utilidades.Constants;
 
 public class TrajectoryFollower {
-    private Chassis chassis;
     private TrajectoryConfig trajectory_config;
     private Trajectory trajectory;
     private PIDController x_controller;
@@ -29,7 +28,6 @@ public class TrajectoryFollower {
     private SwerveSubsystem swerveSubsystem;
 
     public TrajectoryFollower(Chassis chassis, SwerveSubsystem swerveSubsystem) {
-        this.chassis = chassis;
         this.swerveSubsystem = swerveSubsystem;
         
     }
@@ -39,24 +37,24 @@ public class TrajectoryFollower {
         trajectory_config = new TrajectoryConfig(
             Constants.AUTONOMOUS_MAX_SPEED, 
             Constants.AUTONOMOUS_MAX_ACCELERATION
-        ).setKinematics(chassis.robot_kinematics);
+        ).setKinematics(Chassis.robot_kinematics);
 
         // Create a smooth trajectory by some given points in the field
         trajectory = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, new Rotation2d(0)), // The initial position of the robot
             List.of( // A list of points that the robot should go before going to the final
-                new Translation2d(1, 0), 
-                new Translation2d(1, -1)
+                new Translation2d(2, 0), 
+                new Translation2d(2, -2)
             ),
-            new Pose2d(2, -1, Rotation2d.fromDegrees(180)), // The final pose of the robot
+            new Pose2d(4, -2, Rotation2d.fromDegrees(180)), // The final pose of the robot
             trajectory_config // The trajectory configuration
         );
 
         // Define the PID controllers
-        x_controller = new PIDController(Constants.AUTONOMOUS_P_X, 0, 0);
-        y_controller = new PIDController(Constants.AUTONOMOUS_P_Y, 0, 0);
+        x_controller = new PIDController(Constants.AUTONOMOUS_P_X, Constants.AUTONOMOUS_I_X, Constants.AUTONOMOUS_D_X);
+        y_controller = new PIDController(Constants.AUTONOMOUS_P_Y, Constants.AUTONOMOUS_I_Y, Constants.AUTONOMOUS_D_Y);
         z_controller = new ProfiledPIDController(
-            Constants.AUTONOMOUS_P_Z, 0, 0, 
+            Constants.AUTONOMOUS_P_Z, Constants.AUTONOMOUS_I_Z, Constants.AUTONOMOUS_D_Z, 
             Constants.AUTONOMOUS_Z_CONSTRAIT
         );
 
@@ -67,7 +65,7 @@ public class TrajectoryFollower {
         swerve_controller_command = new SwerveControllerCommand(
             trajectory,
             swerveSubsystem::getPose,
-            chassis.robot_kinematics,
+            Chassis.robot_kinematics,
             x_controller,
             y_controller,
             z_controller,

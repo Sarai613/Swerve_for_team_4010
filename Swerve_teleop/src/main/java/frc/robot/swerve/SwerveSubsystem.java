@@ -70,6 +70,7 @@ public class SwerveSubsystem extends SubsystemBase{
 
     // Updates the Odometer
     public void updateOdometry(){
+        updateModulePosition();
         odometer.update(getRotation2d(), swerve_module_position);
     }
     
@@ -79,6 +80,12 @@ public class SwerveSubsystem extends SubsystemBase{
         swerve_module_states[1] = HardwareMap.frontRight.getState();
         swerve_module_states[2] = HardwareMap.backLeft.getState();
         swerve_module_states[3] = HardwareMap.backRight.getState();
+    }
+    public void updateModulePosition(){
+        swerve_module_position[0] = HardwareMap.frontLeft.getPosition();
+        swerve_module_position[1] = HardwareMap.frontRight.getPosition();
+        swerve_module_position[2] = HardwareMap.backLeft.getPosition();
+        swerve_module_position[3] = HardwareMap.backRight.getPosition();
     }
 
     @Override

@@ -7,6 +7,8 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
@@ -27,6 +29,12 @@ public class Robot extends TimedRobot {
   private final SwerveSubsystem swerve_odometry = new SwerveSubsystem();
   TrajectoryFollower trajectoryFollower = new TrajectoryFollower(swerve, swerve_odometry);
   Command command;
+  Translation2d[] mid_points = {
+    new Translation2d(0, 0),
+    new Translation2d(2, 0), 
+    new Translation2d(2, -2),
+    new Translation2d(4, -2)
+  };
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
   private final SlewRateLimiter xspeedLimiter = new SlewRateLimiter(3);
   private final SlewRateLimiter yspeedLimiter = new SlewRateLimiter(3);
@@ -42,8 +50,11 @@ public class Robot extends TimedRobot {
   StructPublisher<Pose2d> odometry_publisher = NetworkTableInstance.getDefault()
     .getStructTopic("MyPose", Pose2d.struct).publish();
 
-  StructArrayPublisher<Pose2d> odometry_array_publisher = NetworkTableInstance.getDefault()
-    .getStructArrayTopic("MyPoseArray", Pose2d.struct).publish();
+  StructPublisher<Pose2d> odometry_end_publisher = NetworkTableInstance.getDefault()
+    .getStructTopic("myEnd", Pose2d.struct).publish();
+
+  StructArrayPublisher<Translation2d> mid_points_publisher = NetworkTableInstance.getDefault()
+    .getStructArrayTopic("MyMidPoseArray", Translation2d.struct).publish();
 
     
 
@@ -60,6 +71,8 @@ public class Robot extends TimedRobot {
         swerve_state_publisher.set(swerve_odometry.swerve_module_states);
         swerve_desired_state_publisher.set(swerve.moduleStates);
         odometry_publisher.set(swerve_odometry.getPose());
+        odometry_end_publisher.set(new Pose2d(4, -2, Rotation2d.fromDegrees(180)));
+        mid_points_publisher.set(mid_points);
   }
 
   @Override

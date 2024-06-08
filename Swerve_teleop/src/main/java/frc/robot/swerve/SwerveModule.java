@@ -22,22 +22,24 @@ public class SwerveModule {
     private final PIDController turning_PID_controller;
     private final int drive_spark_id;
     private final int turning_spark_id;
-    private final AnalogInput absolute_encoder;
+    private final AnalogInput absolute_encoder = null;
     private final double absolute_encoder_offset;
 
 
-    public SwerveModule(int drive_spark_id, int turning_spark_id, int absolute_encoder_id, double absolute_encoder_offset) {
+    public SwerveModule(int drive_spark_id, int turning_spark_id, int absolute_encoder_id, double absolute_encoder_offset, Boolean drive_inverted) {
         this.drive_spark_id = drive_spark_id;
         this.turning_spark_id = turning_spark_id;
 
         this.absolute_encoder_offset = absolute_encoder_offset;
-        absolute_encoder = new AnalogInput(absolute_encoder_id);
+        //absolute_encoder = new AnalogInput(absolute_encoder_id);
 
         drive_motor = new CANSparkMax(drive_spark_id, MotorType.kBrushless);
         turning_motor = new CANSparkMax(turning_spark_id, MotorType.kBrushless);
 
         drive_encoder = drive_motor.getEncoder();
         turning_encoder = turning_motor.getEncoder();
+
+        drive_motor.setInverted(drive_inverted);
         
         // Converts the encoder rotations into common units like meters per second
         drive_encoder.setPositionConversionFactor(Constants.DRIVE_ENCODER_RPM_2_METERS_PER_SECOND);
@@ -72,7 +74,7 @@ public class SwerveModule {
     // Stablish the encoders into 0 position
     public void resetEncoders(){
         drive_encoder.setPosition(0);
-        turning_encoder.setPosition(getAbsoluteEncoderRad()); // Calibrate the turning encoder with the absolute encoder
+        //turning_encoder.setPosition(getAbsoluteEncoderRad()); // Calibrate the turning encoder with the absolute encoder
     }
 
     // Stops the motors
@@ -117,7 +119,7 @@ public class SwerveModule {
         turning_motor.set(turning_PID_controller.calculate(turning_motor_position, state.angle.getRadians()));
 
         // Prints the swerve status
-        SmartDashboard.putString("Debug", "SwerveModule[" + Integer.toString(drive_spark_id) + ", " + Integer.toString(turning_spark_id) + "] state: " + state.toString());
+        //SmartDashboard.putString("Debug", "SwerveModule[" + Integer.toString(drive_spark_id) + ", " + Integer.toString(turning_spark_id) + "] state: " + state.toString());
 
 
         
