@@ -11,8 +11,6 @@ public class Chassis {
 
     public int robot_turning_encoder = 0;
 
-    //making an instance of ChassisSpeeds for making the movement calculation easier
-    public ChassisSpeeds speeds;
     SwerveSubsystem odometry = new SwerveSubsystem();
 
     // Creating kinematics object using the module locations
@@ -29,6 +27,9 @@ public class Chassis {
     // into an array of ModuleStates
     public void drive(double x, double y, double z,boolean field_oriented){
 
+        //making an instance of ChassisSpeeds for making the movement calculation easier
+        ChassisSpeeds speeds;
+
         // Establishes the speed variable depending on the field_oriented
         if(field_oriented) {
             speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
@@ -37,10 +38,6 @@ public class Chassis {
         } else {
             speeds = new ChassisSpeeds(x, y, z);
         }
-
-        speeds.vxMetersPerSecond = x; // The speed in X
-        speeds.vyMetersPerSecond = y; // The speed in y
-        speeds.omegaRadiansPerSecond = z; // The angular speed
 
         moduleStates = robot_kinematics.toSwerveModuleStates(speeds);
 

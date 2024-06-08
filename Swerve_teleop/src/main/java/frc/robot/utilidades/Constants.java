@@ -9,8 +9,7 @@ public class Constants {
     public static final double DRIVE_MOTOR_GEAR_RATIO = 1/8.14;
     public static final double RPM = 5676;
     public static final double TURNING_MOTOR_GEAR_RATIO = 1/12.8;
-    public static final double MAX_SPEED = 3.6576; // in m/s
-    public static final double MAX_ACCELERATION = 1; // in m/s2
+    public static final double MAX_SPEED = RPM / 60 * DRIVE_MOTOR_GEAR_RATIO * WHEEL_DIAMETER * Math.PI * 1000; // in m/s
     public static final double MAX_ANGULAR_SPEED = RPM * TURNING_MOTOR_GEAR_RATIO / 60 * 2 * Math.PI; // in radians per second
     public static final double DRIVE_ENCODER_ROT_2_METER = DRIVE_MOTOR_GEAR_RATIO * Math.PI * WHEEL_DIAMETER;
     public static final double DRIVE_ENCODER_RPM_2_METERS_PER_SECOND = DRIVE_ENCODER_ROT_2_METER / 60; //in meters
