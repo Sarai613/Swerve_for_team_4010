@@ -1,7 +1,8 @@
 package frc.robot.swerve;
 
-import com.revrobotics.CANSparkMax;
+import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -9,8 +10,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.utilidades.Constants;
 
 public class SwerveModule {
@@ -22,7 +23,7 @@ public class SwerveModule {
     private final PIDController turning_PID_controller;
     private final int drive_spark_id;
     private final int turning_spark_id;
-    private final AnalogInput absolute_encoder = null;
+    private final CANcoder absolute_encoder = null;
     private final double absolute_encoder_offset;
 
 
@@ -31,10 +32,10 @@ public class SwerveModule {
         this.turning_spark_id = turning_spark_id;
 
         this.absolute_encoder_offset = absolute_encoder_offset;
-        //absolute_encoder = new AnalogInput(absolute_encoder_id);
+        absolute_encoder = new CANCoder(absolute_encoder_id);
 
-        drive_motor = new CANSparkMax(drive_spark_id, MotorType.kBrushless);
-        turning_motor = new CANSparkMax(turning_spark_id, MotorType.kBrushless);
+        drive_motor = new CANSparkMax(this.drive_spark_id, MotorType.kBrushless);
+        turning_motor = new CANSparkMax(this.turning_spark_id, MotorType.kBrushless);
 
         drive_encoder = drive_motor.getEncoder();
         turning_encoder = turning_motor.getEncoder();
@@ -48,7 +49,7 @@ public class SwerveModule {
         turning_encoder.setVelocityConversionFactor(Constants.TURNING_ENCODER_RPM_2_RAD_PER_SECOND);
 
         // Assigns a pid controller for the turning motor. This one takes a P variable stablish in constants that specifies the proportional PID value
-        turning_PID_controller = new PIDController(Constants.P, 0, 0);
+        turning_PID_controller = new PIDController(Constants.P, Constants.I, Constants.D);
         turning_PID_controller.enableContinuousInput(-Math.PI, Math.PI);
 
         // Set The encoders into 0 position
@@ -74,7 +75,7 @@ public class SwerveModule {
     // Stablish the encoders into 0 position
     public void resetEncoders(){
         drive_encoder.setPosition(0);
-        //turning_encoder.setPosition(getAbsoluteEncoderRad()); // Calibrate the turning encoder with the absolute encoder
+        turning_encoder.setPosition(getAbsoluteEncoderRad()); // Calibrate the turning encoder with the absolute encoder
     }
 
     // Stops the motors
@@ -85,9 +86,8 @@ public class SwerveModule {
 
     // Returns the absolute encoder actual radians
     public double getAbsoluteEncoderRad(){
-        double angle = absolute_encoder.getVoltage() / RobotController.getVoltage5V();
-        angle *= 2 * Math.PI;
-        angle -= absolute_encoder_offset;
+        double angle = absolute_encoder.getAbsolutePosition();
+        angle *= 100 * angle / 360;
         return angle;
     }
 
