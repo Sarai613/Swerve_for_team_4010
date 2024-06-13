@@ -1,10 +1,10 @@
 package frc.robot.swerve;
 
-import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -23,7 +23,7 @@ public class SwerveModule {
     private final PIDController turning_PID_controller;
     private final int drive_spark_id;
     private final int turning_spark_id;
-    private final CANcoder absolute_encoder = null;
+    private CANcoder absolute_encoder;
     private final double absolute_encoder_offset;
 
 
@@ -32,7 +32,7 @@ public class SwerveModule {
         this.turning_spark_id = turning_spark_id;
 
         this.absolute_encoder_offset = absolute_encoder_offset;
-        absolute_encoder = new CANCoder(absolute_encoder_id);
+        absolute_encoder = new CANcoder(absolute_encoder_id);
 
         drive_motor = new CANSparkMax(this.drive_spark_id, MotorType.kBrushless);
         turning_motor = new CANSparkMax(this.turning_spark_id, MotorType.kBrushless);
@@ -86,8 +86,10 @@ public class SwerveModule {
 
     // Returns the absolute encoder actual radians
     public double getAbsoluteEncoderRad(){
-        double angle = absolute_encoder.getAbsolutePosition();
-        angle *= 100 * angle / 360;
+        double angle = absolute_encoder.getAbsolutePosition().getValue();
+        angle *= 2 * Math.PI;
+        angle -= absolute_encoder_offset;
+        //SmartDashboard.putString("algo", angle.toString);
         return angle;
     }
 
@@ -119,7 +121,7 @@ public class SwerveModule {
         turning_motor.set(turning_PID_controller.calculate(turning_motor_position, state.angle.getRadians()));
 
         // Prints the swerve status
-        //SmartDashboard.putString("Debug", "SwerveModule[" + Integer.toString(drive_spark_id) + ", " + Integer.toString(turning_spark_id) + "] state: " + state.toString());
+        SmartDashboard.putString("Debug", "absolute encoder angle" + absolute_encoder.getAbsolutePosition().getValue().toString());
 
 
         

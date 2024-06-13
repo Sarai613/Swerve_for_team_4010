@@ -25,7 +25,7 @@ public class Chassis {
     // This function uses the setDesiredState function in swerve module to indicate what should be the state. 
     // For this we use .toSwerveModuleStates function in the kinematics that convert a ChassisSpeeds class
     // into an array of ModuleStates
-    public void drive(double x, double y, double z,boolean field_oriented){
+    public void drive(double x, double y, double z, boolean field_oriented, SwerveSubsystem subsystem){
 
         //making an instance of ChassisSpeeds for making the movement calculation easier
         ChassisSpeeds speeds;
@@ -41,11 +41,7 @@ public class Chassis {
 
         moduleStates = robot_kinematics.toSwerveModuleStates(speeds);
 
-        SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.MAX_SPEED); //This normalizes the module states values for don't exceed max speed maintaining the original movement
-        HardwareMap.frontLeft.setDesiredState(moduleStates[0]);
-        HardwareMap.frontRight.setDesiredState(moduleStates[1]);
-        HardwareMap.backLeft.setDesiredState(moduleStates[2]);
-        HardwareMap.backRight.setDesiredState(moduleStates[3]);
+        subsystem.setStates(moduleStates);
     }
 
     

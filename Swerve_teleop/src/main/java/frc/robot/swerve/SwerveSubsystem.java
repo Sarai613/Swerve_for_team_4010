@@ -51,7 +51,7 @@ public class SwerveSubsystem extends SubsystemBase{
 
     // Returns the actual robot angle
     public double getHeading() {
-        return Math.IEEEremainder(gyro.getAngle(), 360);
+        return Math.IEEEremainder(-gyro.getAngle(), 360);
     }
 
     // Returns a Rotation2d class with the robot angle
@@ -109,9 +109,9 @@ public class SwerveSubsystem extends SubsystemBase{
     // Set the desired state for each swerveModule by giving an array of states
     public void setStates(SwerveModuleState[] desired_states){
         SwerveDriveKinematics.desaturateWheelSpeeds(desired_states, Constants.MAX_SPEED);
-        HardwareMap.frontLeft.setDesiredState(desired_states[0]);
-        HardwareMap.frontRight.setDesiredState(desired_states[1]);
-        HardwareMap.backLeft.setDesiredState(desired_states[2]);
-        HardwareMap.backRight.setDesiredState(desired_states[3]);
+        HardwareMap.frontLeft.setDesiredState(desired_states[2]);
+        HardwareMap.frontRight.setDesiredState(desired_states[3]);
+        HardwareMap.backLeft.setDesiredState(desired_states[0]);
+        HardwareMap.backRight.setDesiredState(desired_states[1]);
     }
 }

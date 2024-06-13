@@ -17,10 +17,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.Autonomous.Trayectories.output.TrajectoryFollower;
 import frc.robot.swerve.Chassis;
 import frc.robot.swerve.SwerveSubsystem;
 import frc.robot.utilidades.Constants;
+import frc.robot.utilidades.HardwareMap;
 
 
 public class Robot extends TimedRobot {
@@ -116,6 +118,6 @@ public class Robot extends TimedRobot {
         -rotLimiter.calculate(MathUtil.applyDeadband(controller.getRightX(), Constants.JOYSTICK_DEADZONE))
             * Constants.MAX_ANGULAR_SPEED;
 
-    swerve.drive(xSpeed, ySpeed, rot, field_relative);
+    swerve.drive(xSpeed, ySpeed, rot, field_relative, swerve_odometry);
   }
 }
