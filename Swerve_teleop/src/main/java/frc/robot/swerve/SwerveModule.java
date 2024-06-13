@@ -43,8 +43,8 @@ public class SwerveModule {
         drive_motor.setInverted(drive_inverted);
         
         // Converts the encoder rotations into common units like meters per second
-        drive_encoder.setPositionConversionFactor(Constants.DRIVE_ENCODER_RPM_2_METERS_PER_SECOND);
-        drive_encoder.setVelocityConversionFactor(Constants.DRIVE_ENCODER_ROT_2_METER);
+        drive_encoder.setPositionConversionFactor(Constants.DRIVE_ENCODER_ROT_2_METER);
+        drive_encoder.setVelocityConversionFactor(Constants.DRIVE_ENCODER_RPM_2_METERS_PER_SECOND);
         turning_encoder.setPositionConversionFactor(Constants.TURNING_ENCODER_ROT_2_RAD);
         turning_encoder.setVelocityConversionFactor(Constants.TURNING_ENCODER_RPM_2_RAD_PER_SECOND);
 
