@@ -1,13 +1,15 @@
 package frc.robot.utilidades;
 
+import org.opencv.core.Mat;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 public class Constants {
     public static final double WHEEL_DIAMETER = 0.09; //in meters
-    public static final double DISTANCE_BETWEEN_WHEELS_AND_THE_CENTER = .14; //in meters
-    public static final double TRACK = .28; //in meters
-    public static final double WHEELBASE = .28; //in meters
+    public static final double TRACK = .576; //in meters
+    public static final double WHEELBASE = .436; //in meters
+    public static final double DISTANCE_BETWEEN_WHEELS_AND_THE_CENTER = Math.sqrt(TRACK * TRACK + WHEELBASE * WHEELBASE); //in meters
     public static final double DRIVE_MOTOR_GEAR_RATIO = 1/6.12;
     public static final double RPM = 5820;
     public static final double TURNING_MOTOR_GEAR_RATIO = 1/12.8;
