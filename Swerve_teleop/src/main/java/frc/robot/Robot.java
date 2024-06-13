@@ -118,6 +118,6 @@ public class Robot extends TimedRobot {
         -rotLimiter.calculate(MathUtil.applyDeadband(controller.getRightX(), Constants.JOYSTICK_DEADZONE))
             * Constants.MAX_ANGULAR_SPEED;
 
-    swerve.drive(xSpeed, ySpeed, rot, field_relative, swerve_odometry);
+    swerve.drive(xSpeed, ySpeed, -rot, field_relative, swerve_odometry);
   }
 }
