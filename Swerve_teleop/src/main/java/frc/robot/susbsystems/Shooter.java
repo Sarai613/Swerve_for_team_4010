@@ -15,6 +15,10 @@ public class Shooter extends SubsystemBase {
     HardwareMap.shooter_launcher.set(1);
   }
 
+  public void reload(){
+
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
