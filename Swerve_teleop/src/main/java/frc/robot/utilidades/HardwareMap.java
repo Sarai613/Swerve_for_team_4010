@@ -1,8 +1,10 @@
 package frc.robot.utilidades;
 
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import frc.robot.susbsystems.TejuinoBoard;
 import frc.robot.swerve.SwerveModule;
 public class HardwareMap{
 
@@ -14,4 +16,7 @@ public class HardwareMap{
     public static final CANSparkMax intake_front_wheel = new CANSparkMax(0, MotorType.kBrushless);
     public static final CANSparkMax intake_back_wheel = new CANSparkMax(1, MotorType.kBrushless);
     public static final CANSparkMax shooter_launcher = new CANSparkMax(2, MotorType.kBrushless);
+    public static final TalonFX shooter_reloader = new TalonFX(52);
+    public static final TalonFX shooter_spin_motor = new TalonFX(56);
+    public static final TalonFX shooter_spin_motor_2 = new TalonFX(54);
 }

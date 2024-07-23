@@ -1,7 +1,5 @@
 package frc.robot.utilidades;
 
-import org.opencv.core.Mat;
-
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
@@ -52,4 +50,9 @@ public class Constants {
         new TrapezoidProfile.Constraints(
             AUTONOMOUS_MAX_ANGULAR_SPEED,
             AUTONOMOUS_MAX_ANGULAR_ACCELERATION);
+
+
+    // Constants for the shooter
+
+    public static final double TICKS_PER_RADIAN_OF_THE_ROTATOR = 56;
 }

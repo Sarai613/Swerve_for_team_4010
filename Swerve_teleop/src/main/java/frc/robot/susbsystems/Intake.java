@@ -17,6 +17,11 @@ public class Intake extends SubsystemBase {
     HardwareMap.intake_back_wheel.set(1);
   }
 
+  public void stop(){
+    HardwareMap.intake_front_wheel.set(0);
+    HardwareMap.intake_back_wheel.set(0);
+  }
+
   public void give(){
     HardwareMap.intake_front_wheel.set(-1);
     HardwareMap.intake_back_wheel.set(-1);

@@ -17,12 +17,11 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.Autonomous.Trayectories.output.TrajectoryFollower;
+import frc.robot.commands.Test;
 import frc.robot.swerve.Chassis;
 import frc.robot.swerve.SwerveSubsystem;
 import frc.robot.utilidades.Constants;
-import frc.robot.utilidades.HardwareMap;
 
 
 public class Robot extends TimedRobot {
@@ -31,6 +30,7 @@ public class Robot extends TimedRobot {
   private final SwerveSubsystem swerve_odometry = new SwerveSubsystem();
   TrajectoryFollower trajectoryFollower = new TrajectoryFollower(swerve, swerve_odometry);
   Command command;
+  Command trajectory_command;
   Translation2d[] mid_points = {
     new Translation2d(0, 0),
     new Translation2d(2, 0), 
@@ -79,15 +79,17 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit(){
-    command = trajectoryFollower.getAutonomousCommand(); // Gets the trajectory command
-    command.schedule(); // Schedules the trajectory command
+    command = new Test(); // Gets the command
+    //trajectory_command = trajectoryFollower.getAutonomousCommand();
+    trajectory_command = new Test();
+    CommandScheduler.getInstance().schedule(command, trajectory_command);
+    CommandScheduler.getInstance().run(); // Runs the scheduled commands
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
 
-    CommandScheduler.getInstance().run(); // Runs the scheduled commands
   }
 
   /** This function is called periodically during operator control. */
