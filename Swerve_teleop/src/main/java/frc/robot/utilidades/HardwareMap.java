@@ -1,5 +1,8 @@
 package frc.robot.utilidades;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import frc.robot.swerve.SwerveModule;
 public class HardwareMap{
 
@@ -8,4 +11,7 @@ public class HardwareMap{
     public static final SwerveModule frontRight = new SwerveModule(22, 24, 12, Math.PI * 3 / 4 - .166, true);
     public static final SwerveModule backLeft = new SwerveModule(21, 31, 10,  Math.PI / 2 - 0.162, true );
     public static final SwerveModule backRight = new SwerveModule(33, 34, 11,  Math.PI / 2, false);
+    public static final CANSparkMax intake_front_wheel = new CANSparkMax(0, MotorType.kBrushless);
+    public static final CANSparkMax intake_back_wheel = new CANSparkMax(1, MotorType.kBrushless);
+    public static final CANSparkMax shooter_launcher = new CANSparkMax(2, MotorType.kBrushless);
 }
