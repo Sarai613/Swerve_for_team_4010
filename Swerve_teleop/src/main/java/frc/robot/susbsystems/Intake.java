@@ -13,8 +13,8 @@ public class Intake extends SubsystemBase {
     
   }
   public void take(){
-    HardwareMap.intake_front_wheel.set(1);
-    HardwareMap.intake_back_wheel.set(1);
+    HardwareMap.intake_front_wheel.set(.5);
+    HardwareMap.intake_back_wheel.set(.5);
   }
 
   public void stop(){
@@ -23,8 +23,8 @@ public class Intake extends SubsystemBase {
   }
 
   public void give(){
-    HardwareMap.intake_front_wheel.set(-1);
-    HardwareMap.intake_back_wheel.set(-1);
+    HardwareMap.intake_front_wheel.set(-.5);
+    HardwareMap.intake_back_wheel.set(-.5);
   }
   
   @Override
