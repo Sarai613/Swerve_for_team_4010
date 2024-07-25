@@ -13,27 +13,34 @@ import frc.robot.utilidades.Constants;
 import frc.robot.utilidades.HardwareMap;
 
 public class Shooter extends SubsystemBase {
+
+  public final TalonSRX shooter_launcher = new TalonSRX(4);
+  public final TalonSRX shooter_reloader = new TalonSRX(1);
+  public final TalonSRX shooter_spin_motor = new TalonSRX(2);
+  public final TalonSRX shooter_spin_motor_2 = new TalonSRX(3);
+
+
   /** Creates a new Shooter. */
   public Shooter() {
-    HardwareMap.shooter_spin_motor.set(TalonSRXControlMode.Position, 0);;
+    shooter_spin_motor.set(TalonSRXControlMode.Position, 0);;
   }
 
   PhoenixPIDController rotatorPIDController = new PhoenixPIDController(1, 0.2, 15);
 
   public void chargeLauncher(){
-    HardwareMap.shooter_launcher.set(TalonSRXControlMode.Velocity, .5);
+    shooter_launcher.set(TalonSRXControlMode.Velocity, .5);
   }
 
   public void reload(){
-      HardwareMap.shooter_launcher.set(TalonSRXControlMode.Velocity, .5);
+      shooter_launcher.set(TalonSRXControlMode.Velocity, .5);
   }
 
   public void stopLauncher(){
-    HardwareMap.shooter_launcher.set(TalonSRXControlMode.Velocity, 0);
+    shooter_launcher.set(TalonSRXControlMode.Velocity, 0);
   }
   
   public void stopReloader(){
-    HardwareMap.shooter_launcher.set(TalonSRXControlMode.Velocity, 0);
+    shooter_launcher.set(TalonSRXControlMode.Velocity, 0);
   }
 
   public void stop(){
@@ -42,7 +49,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public double[] getRotatorPosition(){
-    return new double[] {HardwareMap.shooter_spin_motor.getSelectedSensorPosition(), HardwareMap.shooter_spin_motor_2.getSelectedSensorPosition()};
+    return new double[] {shooter_spin_motor.getSelectedSensorPosition(), shooter_spin_motor_2.getSelectedSensorPosition()};
   }
 
   public Rotation2d[] getRotatorRotation(){
@@ -52,8 +59,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setAngle(Rotation2d angle){ 
-      HardwareMap.shooter_spin_motor.set(TalonSRXControlMode.Velocity, rotatorPIDController.calculate(getRotatorPosition()[0], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()));
-      HardwareMap.shooter_spin_motor_2.set(TalonSRXControlMode.Velocity, rotatorPIDController.calculate(getRotatorPosition()[1], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()));
+      shooter_spin_motor.set(TalonSRXControlMode.Velocity, rotatorPIDController.calculate(getRotatorPosition()[0], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()));
+      shooter_spin_motor_2.set(TalonSRXControlMode.Velocity, rotatorPIDController.calculate(getRotatorPosition()[1], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()));
   }
 
 

@@ -11,23 +11,32 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.swerve.Chassis;
 import frc.robot.utilidades.Constants;
 import frc.robot.utilidades.HardwareMap;
+import frc.robot.swerve.SwerveModule;
 
-public class SwerveSubsystem extends SubsystemBase{
+public class Swerve extends SubsystemBase{
+
+    //Defines every single module by giving the drive spark id, the turning spark id, the absolute encoder id, absolute encoder offset, is inverted
+    private final SwerveModule frontLeft = new SwerveModule(33, 17, 2546, Math.PI * 3 / 4 + .358, false);
+    private final SwerveModule frontRight = new SwerveModule(31, 22, 39, Math.PI * 3 / 4 - .166, true);
+    private final SwerveModule backLeft = new SwerveModule(16, 18, 1513,  Math.PI / 2 - 0.162, true );
+    private final SwerveModule backRight = new SwerveModule(21, 34, 6126,  Math.PI / 2, false);
+
     private final AHRS gyro = new AHRS(SPI.Port.kMXP);
     private final SwerveModulePosition[] swerve_module_position = new SwerveModulePosition[]{
-        HardwareMap.frontLeft.getPosition(),
-        HardwareMap.frontRight.getPosition(),
-        HardwareMap.backLeft.getPosition(),
-        HardwareMap.backRight.getPosition()
+        frontLeft.getPosition(),
+        frontRight.getPosition(),
+        backLeft.getPosition(),
+        backRight.getPosition()
         };
     
     public final SwerveModuleState[] swerve_module_states = new SwerveModuleState[]{
-        HardwareMap.frontLeft.getState(),
-        HardwareMap.frontRight.getState(),
-        HardwareMap.backLeft.getState(),
-        HardwareMap.backRight.getState()
+        frontLeft.getState(),
+        frontRight.getState(),
+        backLeft.getState(),
+        backRight.getState()
         };;
     private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(Chassis.robot_kinematics,
             new Rotation2d(0), swerve_module_position,
@@ -78,15 +87,15 @@ public class SwerveSubsystem extends SubsystemBase{
     
     // Update the module states reading
     public void updateModuleStates(){
-        swerve_module_states[0] = HardwareMap.frontLeft.getState();
-        swerve_module_states[1] = HardwareMap.frontRight.getState();
-        swerve_module_states[2] = HardwareMap.backLeft.getState();
-        swerve_module_states[3] = HardwareMap.backRight.getState();
+        swerve_module_states[0] = frontLeft.getState();
+        swerve_module_states[1] = frontRight.getState();
+        swerve_module_states[2] = backLeft.getState();
+        swerve_module_states[3] = backRight.getState();
     }
     public void updateModulePosition(){
-        swerve_module_position[0] = HardwareMap.frontLeft.getPosition();
-        swerve_module_position[1] = HardwareMap.frontRight.getPosition();
-        swerve_module_position[2] = HardwareMap.backLeft.getPosition();
+        swerve_module_position[0] = frontLeft.getPosition();
+        swerve_module_position[1] = frontRight.getPosition();
+        swerve_module_position[2] = backLeft.getPosition();
         swerve_module_position[3] = HardwareMap.backRight.getPosition();
     }
 
@@ -100,18 +109,18 @@ public class SwerveSubsystem extends SubsystemBase{
 
     // Stop the swerve modules
     public void stopModules() {
-        HardwareMap.frontLeft.stop();
-        HardwareMap.frontRight.stop();
-        HardwareMap.backLeft.stop();
-        HardwareMap.backRight.stop();
+        frontLeft.stop();
+        frontRight.stop();
+        backLeft.stop();
+        backRight.stop();
     }
 
     // Set the desired state for each swerveModule by giving an array of states
     public void setStates(SwerveModuleState[] desired_states){
         SwerveDriveKinematics.desaturateWheelSpeeds(desired_states, Constants.MAX_SPEED);
-        HardwareMap.frontLeft.setDesiredState(desired_states[2]);
-        HardwareMap.frontRight.setDesiredState(desired_states[3]);
-        HardwareMap.backLeft.setDesiredState(desired_states[0]);
-        HardwareMap.backRight.setDesiredState(desired_states[1]);
+        frontLeft.setDesiredState(desired_states[2]);
+        frontRight.setDesiredState(desired_states[3]);
+        backLeft.setDesiredState(desired_states[0]);
+        backRight.setDesiredState(desired_states[1]);
     }
 }
