@@ -22,20 +22,20 @@ public class Test extends Command{
     public void initialize() {
         intake.take();
         shooter.chargeLauncher();
-        tejuinoBoard.all_led_control(0, 255, 0, 0);
+        tejuinoBoard.all_led_control(1, 255, 0, 0);
         scheduler.schedule(() -> {
             // Code to run after the delay
             intake.stop();
             shooter.stopLauncher();
             shooter.reload();
             tejuinoBoard.all_led_control(1, 0, 255, 0);
-        }, 2, TimeUnit.SECONDS);
 
-        scheduler.schedule(() -> {
-            // Code to run after the delay
-            shooter.stopReloader();
-            shooter.setAngle(new Rotation2d(Math.PI/4));
-            tejuinoBoard.all_led_control(2, 0, 0, 255);
+            scheduler.schedule(() -> {
+                // Code to run after the delay
+                shooter.stopReloader();
+                shooter.setAngle(new Rotation2d(Math.PI/4));
+                tejuinoBoard.all_led_control(1, 0, 0, 255);
+            }, 2, TimeUnit.SECONDS);
         }, 2, TimeUnit.SECONDS);
 
         finished = true;
