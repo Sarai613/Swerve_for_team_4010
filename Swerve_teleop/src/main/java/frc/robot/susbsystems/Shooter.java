@@ -10,7 +10,6 @@ import com.ctre.phoenix6.mechanisms.swerve.utility.PhoenixPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilidades.Constants;
-import frc.robot.utilidades.HardwareMap;
 
 public class Shooter extends SubsystemBase {
 
@@ -28,19 +27,19 @@ public class Shooter extends SubsystemBase {
   PhoenixPIDController rotatorPIDController = new PhoenixPIDController(1, 0.2, 15);
 
   public void chargeLauncher(){
-    shooter_launcher.set(TalonSRXControlMode.Velocity, .5);
+    shooter_launcher.set(TalonSRXControlMode.PercentOutput, .5);
   }
 
   public void reload(){
-      shooter_launcher.set(TalonSRXControlMode.Velocity, .5);
+      shooter_launcher.set(TalonSRXControlMode.PercentOutput, .5);
   }
 
   public void stopLauncher(){
-    shooter_launcher.set(TalonSRXControlMode.Velocity, 0);
+    shooter_launcher.set(TalonSRXControlMode.PercentOutput, 0);
   }
   
   public void stopReloader(){
-    shooter_launcher.set(TalonSRXControlMode.Velocity, 0);
+    shooter_launcher.set(TalonSRXControlMode.PercentOutput, 0);
   }
 
   public void stop(){
@@ -59,8 +58,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setAngle(Rotation2d angle){ 
-      shooter_spin_motor.set(TalonSRXControlMode.Velocity, rotatorPIDController.calculate(getRotatorPosition()[0], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()));
-      shooter_spin_motor_2.set(TalonSRXControlMode.Velocity, rotatorPIDController.calculate(getRotatorPosition()[1], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()));
+      shooter_spin_motor.set(TalonSRXControlMode.PercentOutput, rotatorPIDController.calculate(getRotatorPosition()[0], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()));
+      shooter_spin_motor_2.set(TalonSRXControlMode.PercentOutput, rotatorPIDController.calculate(getRotatorPosition()[1], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()));
   }
 
 

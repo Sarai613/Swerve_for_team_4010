@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.swerve.Chassis;
 import frc.robot.utilidades.Constants;
-import frc.robot.utilidades.HardwareMap;
 import frc.robot.swerve.SwerveModule;
 
 public class Swerve extends SubsystemBase{
@@ -96,7 +95,7 @@ public class Swerve extends SubsystemBase{
         swerve_module_position[0] = frontLeft.getPosition();
         swerve_module_position[1] = frontRight.getPosition();
         swerve_module_position[2] = backLeft.getPosition();
-        swerve_module_position[3] = HardwareMap.backRight.getPosition();
+        swerve_module_position[3] = backRight.getPosition();
     }
 
     @Override
