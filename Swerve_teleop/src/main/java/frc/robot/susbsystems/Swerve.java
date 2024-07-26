@@ -11,9 +11,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.swerve.Chassis;
 import frc.robot.utilidades.Constants;
-import frc.robot.swerve.SwerveModule;
 
 public class Swerve extends SubsystemBase{
 
@@ -42,7 +40,7 @@ public class Swerve extends SubsystemBase{
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
 
     
-    public SwerveSubsystem() {
+    public Swerve() {
         new Thread(() -> {
             try {
                 Thread.sleep(1000);
