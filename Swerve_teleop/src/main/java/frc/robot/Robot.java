@@ -20,14 +20,14 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.Autonomous.Trayectories.output.TrajectoryFollower;
 import frc.robot.commands.Test;
 import frc.robot.swerve.Chassis;
-import frc.robot.swerve.SwerveSubsystem;
+import frc.robot.susbsystems.Swerve;;
 import frc.robot.utilidades.Constants;
 
 
 public class Robot extends TimedRobot {
   private final XboxController controller = new XboxController(0);
   private final Chassis swerve = new Chassis();
-  private final SwerveSubsystem swerve_odometry = new SwerveSubsystem();
+  private final Swerve swerve_odometry = new Swerve();
   TrajectoryFollower trajectoryFollower = new TrajectoryFollower(swerve, swerve_odometry);
   Command command;
   Command trajectory_command;

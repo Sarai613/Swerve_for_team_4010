@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import frc.robot.susbsystems.Swerve;
 import frc.robot.swerve.Chassis;
-import frc.robot.swerve.SwerveSubsystem;
 import frc.robot.utilidades.Constants;
 
 public class TrajectoryFollower {
@@ -25,10 +25,10 @@ public class TrajectoryFollower {
     private PIDController y_controller;
     private ProfiledPIDController z_controller;
     private SwerveControllerCommand swerve_controller_command;
-    private SwerveSubsystem swerveSubsystem;
+    private Swerve Swerve;
 
-    public TrajectoryFollower(Chassis chassis, SwerveSubsystem swerveSubsystem) {
-        this.swerveSubsystem = swerveSubsystem;
+    public TrajectoryFollower(Chassis chassis, Swerve Swerve) {
+        this.Swerve = Swerve;
         
     }
 
@@ -64,20 +64,20 @@ public class TrajectoryFollower {
         //Construct the command to follow the trajectory
         swerve_controller_command = new SwerveControllerCommand(
             trajectory,
-            swerveSubsystem::getPose,
+            Swerve::getPose,
             Chassis.robot_kinematics,
             x_controller,
             y_controller,
             z_controller,
-            swerveSubsystem::setStates,
-            swerveSubsystem);
+            Swerve::setStates,
+            Swerve);
 
 
 
             // 5. Add some init and wrap-up, and return everything
             return new SequentialCommandGroup(
-                new InstantCommand(() -> swerveSubsystem.resetOdometry(trajectory.getInitialPose())),
+                new InstantCommand(() -> Swerve.resetOdometry(trajectory.getInitialPose())),
                 swerve_controller_command,
-                new InstantCommand(() -> swerveSubsystem.stopModules()));
+                new InstantCommand(() -> Swerve.stopModules()));
     }
 }
