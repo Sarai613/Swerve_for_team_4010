@@ -7,20 +7,23 @@ package frc.robot.susbsystems;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
 
-  public static final CANSparkMax intake_front_wheel = new CANSparkMax(24, MotorType.kBrushless);
-  public static final CANSparkMax intake_back_wheel = new CANSparkMax(23, MotorType.kBrushless);
+  private final CANSparkMax intake_front_wheel = new CANSparkMax(24, MotorType.kBrushless);
+  private final CANSparkMax intake_back_wheel = new CANSparkMax(23, MotorType.kBrushless);
+  private final SlewRateLimiter fRateLimiter = new SlewRateLimiter(3);
+  private final SlewRateLimiter bRateLimiter = new SlewRateLimiter(3);
 
   /** Creates a new Intake. */
   public Intake() {
     
   }
   public void take(){
-    intake_front_wheel.set(.5);
-    intake_back_wheel.set(.5);
+    intake_front_wheel.set(fRateLimiter.calculate(1));
+    intake_back_wheel.set(bRateLimiter.calculate(1));
   }
 
   public void stop(){
@@ -29,8 +32,8 @@ public class Intake extends SubsystemBase {
   }
 
   public void give(){
-    intake_front_wheel.set(-.5);
-    intake_back_wheel.set(-.5);
+    intake_front_wheel.set(fRateLimiter.calculate(-1));
+    intake_back_wheel.set(bRateLimiter.calculate(-1));
   }
   
   @Override

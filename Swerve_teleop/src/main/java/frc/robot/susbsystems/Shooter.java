@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix6.mechanisms.swerve.utility.PhoenixPIDController;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilidades.Constants;
@@ -18,6 +19,8 @@ public class Shooter extends SubsystemBase {
   public final TalonSRX shooter_reloader = new TalonSRX(1);
   public final TalonSRX shooter_spin_motor = new TalonSRX(2);
   public final TalonSRX shooter_spin_motor_2 = new TalonSRX(3);
+  private final SlewRateLimiter lRateLimiter = new SlewRateLimiter(3);
+  private final SlewRateLimiter rRateLimiter = new SlewRateLimiter(3);
 
 
   /** Creates a new Shooter. */
@@ -28,11 +31,16 @@ public class Shooter extends SubsystemBase {
   PhoenixPIDController rotatorPIDController = new PhoenixPIDController(1, 0.2, 15);
 
   public void chargeLauncher(){
-    shooter_launcher.set(TalonSRXControlMode.PercentOutput, .5);
+    shooter_launcher.set(TalonSRXControlMode.PercentOutput, lRateLimiter.calculate(1));
   }
 
   public void reload(){
-      shooter_launcher.set(TalonSRXControlMode.PercentOutput, .5);
+      shooter_launcher.set(TalonSRXControlMode.PercentOutput, rRateLimiter.calculate(1));
+  }
+
+  public void moveBoth(){
+    chargeLauncher();
+    reload();
   }
 
   public void stopLauncher(){
