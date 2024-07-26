@@ -1,4 +1,4 @@
-package frc.Autonomous.Trayectories.output;
+package frc.robot.autonomous;
 
 import java.util.List;
 
@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.susbsystems.Swerve;
-import frc.robot.swerve.Chassis;
 import frc.robot.utilidades.Constants;
 
 public class TrajectoryFollower {
@@ -25,10 +24,10 @@ public class TrajectoryFollower {
     private PIDController y_controller;
     private ProfiledPIDController z_controller;
     private SwerveControllerCommand swerve_controller_command;
-    private Swerve Swerve;
+    private final Swerve swerve;
 
-    public TrajectoryFollower(Chassis chassis, Swerve Swerve) {
-        this.Swerve = Swerve;
+    public TrajectoryFollower(Swerve swerve) {
+        this.swerve = swerve;
         
     }
 
@@ -37,7 +36,7 @@ public class TrajectoryFollower {
         trajectory_config = new TrajectoryConfig(
             Constants.AUTONOMOUS_MAX_SPEED, 
             Constants.AUTONOMOUS_MAX_ACCELERATION
-        ).setKinematics(Chassis.robot_kinematics);
+        ).setKinematics(swerve.robot_kinematics);
 
         // Create a smooth trajectory by some given points in the field
         trajectory = TrajectoryGenerator.generateTrajectory(
@@ -64,20 +63,20 @@ public class TrajectoryFollower {
         //Construct the command to follow the trajectory
         swerve_controller_command = new SwerveControllerCommand(
             trajectory,
-            Swerve::getPose,
-            Chassis.robot_kinematics,
+            swerve::getPose,
+            swerve.robot_kinematics,
             x_controller,
             y_controller,
             z_controller,
-            Swerve::setStates,
-            Swerve);
+            swerve::setStates,
+            swerve);
 
 
 
             // 5. Add some init and wrap-up, and return everything
             return new SequentialCommandGroup(
-                new InstantCommand(() -> Swerve.resetOdometry(trajectory.getInitialPose())),
+                new InstantCommand(() -> swerve.resetOdometry(trajectory.getInitialPose())),
                 swerve_controller_command,
-                new InstantCommand(() -> Swerve.stopModules()));
+                new InstantCommand(() -> swerve.stopModules()));
     }
 }

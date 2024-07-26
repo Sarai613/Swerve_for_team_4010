@@ -1,4 +1,4 @@
-package frc.robot.swerve;
+package frc.robot.utilidades;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -9,7 +9,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import frc.robot.utilidades.Constants;
 
 public class SwerveModule {
 
@@ -20,7 +19,7 @@ public class SwerveModule {
     private final PIDController turning_PID_controller;
     private final int drive_spark_id;
     private final int turning_spark_id;
-    private CANcoder absolute_encoder;
+    private final CANcoder absolute_encoder;
     private final double absolute_encoder_offset;
 
 

@@ -11,9 +11,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.swerve.Chassis;
-import frc.robot.swerve.SwerveModule;
 import frc.robot.utilidades.Constants;
+import frc.robot.utilidades.SwerveModule;
 
 public class Swerve extends SubsystemBase{
 
@@ -24,6 +23,17 @@ public class Swerve extends SubsystemBase{
     private final SwerveModule backRight = new SwerveModule(21, 34, 6126,  Math.PI / 2, false);
 
     private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+
+    public int robot_turning_encoder = 0;
+
+    // Creating kinematics object using the module locations
+    public SwerveDriveKinematics robot_kinematics = new SwerveDriveKinematics(
+    Constants.FRONT_LEFT_LOCATION, Constants.FRONT_RIGHT_LOCATION, Constants.BACK_LEFT_LOCATION, Constants.BACK_RIGHT_LOCATION
+    );
+
+    // Convert to module states
+    public SwerveModuleState[] moduleStates;
+
     private final SwerveModulePosition[] swerve_module_position = new SwerveModulePosition[]{
         frontLeft.getPosition(),
         frontRight.getPosition(),
@@ -37,7 +47,7 @@ public class Swerve extends SubsystemBase{
         backLeft.getState(),
         backRight.getState()
         };;
-    private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(Chassis.robot_kinematics,
+    private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(robot_kinematics,
             new Rotation2d(0), swerve_module_position,
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
 

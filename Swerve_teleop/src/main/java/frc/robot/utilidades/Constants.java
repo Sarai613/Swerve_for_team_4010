@@ -11,6 +11,8 @@ public class Constants {
     public static final double DRIVE_MOTOR_GEAR_RATIO = 1/6.12;
     public static final double RPM = 5820;
     public static final double TURNING_MOTOR_GEAR_RATIO = 1/12.8;
+    public static final double MAX_ACCELERATION_METERS_PER_SECOND = 3;
+    public static final double MAX_ANGULAR_ACCELERATION_RADIANS_PER_SECOND = 3; 
     public static final double MAX_SPEED = RPM / 60 * DRIVE_MOTOR_GEAR_RATIO * WHEEL_DIAMETER * Math.PI; // in m/s
     public static final double MAX_ANGULAR_SPEED = MAX_SPEED / (DISTANCE_BETWEEN_WHEELS_AND_THE_CENTER * 2 * Math.PI) * 2 * Math.PI; // in radians per second
     public static final double DRIVE_ENCODER_ROT_2_METER = DRIVE_MOTOR_GEAR_RATIO * Math.PI * WHEEL_DIAMETER;
@@ -55,4 +57,12 @@ public class Constants {
     // Constants for the shooter
 
     public static final double TICKS_PER_RADIAN_OF_THE_ROTATOR = 56;
+
+
+    //constants for the controllers 
+    public static final int DRIVER_PORT = 1;
+    public static final int DRIVER_X_AXIS = 0;
+    public static final int DRIVER_Y_AXIS = 3;
+    public static final int DRIVER_Z_AXIS = 2;
+    public static final int DRIVER_ROBOT_ORIENTED_BUTTON = 20;
 }
