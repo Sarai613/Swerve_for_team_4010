@@ -11,6 +11,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.swerve.Chassis;
+import frc.robot.swerve.SwerveModule;
 import frc.robot.utilidades.Constants;
 
 public class Swerve extends SubsystemBase{
