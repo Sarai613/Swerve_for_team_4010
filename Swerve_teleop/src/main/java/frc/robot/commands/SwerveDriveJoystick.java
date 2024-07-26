@@ -46,8 +46,8 @@ public class SwerveDriveJoystick extends Command{
         zSpeed = Math.abs(zSpeed) > Constants.JOYSTICK_DEADZONE ? zSpeed : 0.0;
 
         xSpeed = xLimiter.calculate(xSpeed) * Constants.MAX_SPEED;
-        ySpeed = xLimiter.calculate(ySpeed) * Constants.MAX_SPEED;
-        zSpeed = xLimiter.calculate(zSpeed) * Constants.MAX_ANGULAR_SPEED;
+        ySpeed = yLimiter.calculate(ySpeed) * Constants.MAX_SPEED;
+        zSpeed = zLimiter.calculate(zSpeed) * Constants.MAX_ANGULAR_SPEED;
 
         ChassisSpeeds chassisSpeeds;
         if (field_relative.get()){
