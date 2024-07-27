@@ -50,10 +50,20 @@ public class Shooter extends SubsystemBase {
   public void stopReloader(){
     shooter_launcher.set(TalonSRXControlMode.PercentOutput, 0);
   }
+  
+  public void stopRotator(){
+    setRotatorPower(0);
+  }
 
-  public void stop(){
+  public void stopRollers(){
     stopLauncher();
     stopReloader();
+  }
+
+  public void stop(){
+    stopRollers();
+    stopRotator();
+
   }
 
   public double[] getRotatorPosition(){
@@ -67,10 +77,14 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setAngle(Rotation2d angle){ 
-      shooter_spin_motor.set(TalonSRXControlMode.PercentOutput, rotatorPIDController.calculate(getRotatorPosition()[0], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()) * .2);
-      shooter_spin_motor_2.set(TalonSRXControlMode.PercentOutput, rotatorPIDController.calculate(getRotatorPosition()[1], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()) * .2);
+    shooter_spin_motor.set(TalonSRXControlMode.PercentOutput, rotatorPIDController.calculate(getRotatorPosition()[0], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()) * .2);
+    shooter_spin_motor_2.set(TalonSRXControlMode.PercentOutput, rotatorPIDController.calculate(getRotatorPosition()[1], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()) * .2);
   }
 
+  public void setRotatorPower(double power){
+    shooter_spin_motor.set(TalonSRXControlMode.PercentOutput, power);
+    shooter_spin_motor_2.set(TalonSRXControlMode.PercentOutput, power);
+  }
 
   @Override
   public void periodic() {

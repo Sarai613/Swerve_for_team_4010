@@ -14,12 +14,16 @@ import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.susbsystems.Intake;
+import frc.robot.susbsystems.Shooter;
 import frc.robot.susbsystems.Swerve;
 
 
 public class Robot extends TimedRobot {
   private final Swerve swerve = new Swerve();
-  RobotContainer robotContainer = new RobotContainer(swerve);
+  private final Intake intake = new Intake();
+  private final Shooter shooter = new Shooter();
+  RobotContainer robotContainer = new RobotContainer(swerve, intake, shooter);
   Command test_command = robotContainer.getTestCommand();
   Command autonomous_command = robotContainer.getAutonomousCommand();
   Translation2d[] mid_points = {
