@@ -19,7 +19,7 @@ import frc.robot.susbsystems.Swerve;
 
 public class Robot extends TimedRobot {
   private final Swerve swerve = new Swerve();
-  RobotContainer robotContainer = new RobotContainer();
+  RobotContainer robotContainer = new RobotContainer(swerve);
   Command test_command = robotContainer.getTestCommand();
   Command autonomous_command = robotContainer.getAutonomousCommand();
   Translation2d[] mid_points = {

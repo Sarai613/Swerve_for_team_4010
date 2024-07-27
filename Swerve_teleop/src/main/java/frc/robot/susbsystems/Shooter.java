@@ -31,11 +31,11 @@ public class Shooter extends SubsystemBase {
   PhoenixPIDController rotatorPIDController = new PhoenixPIDController(1, 0.2, 15);
 
   public void chargeLauncher(){
-    shooter_launcher.set(TalonSRXControlMode.PercentOutput, lRateLimiter.calculate(1));
+    shooter_launcher.set(TalonSRXControlMode.PercentOutput, lRateLimiter.calculate(.5));
   }
 
   public void reload(){
-      shooter_launcher.set(TalonSRXControlMode.PercentOutput, rRateLimiter.calculate(1));
+      shooter_launcher.set(TalonSRXControlMode.PercentOutput, rRateLimiter.calculate(.5));
   }
 
   public void moveBoth(){
@@ -67,8 +67,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setAngle(Rotation2d angle){ 
-      shooter_spin_motor.set(TalonSRXControlMode.PercentOutput, rotatorPIDController.calculate(getRotatorPosition()[0], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()));
-      shooter_spin_motor_2.set(TalonSRXControlMode.PercentOutput, rotatorPIDController.calculate(getRotatorPosition()[1], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()));
+      shooter_spin_motor.set(TalonSRXControlMode.PercentOutput, rotatorPIDController.calculate(getRotatorPosition()[0], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()) * .2);
+      shooter_spin_motor_2.set(TalonSRXControlMode.PercentOutput, rotatorPIDController.calculate(getRotatorPosition()[1], angle.getRadians() * Constants.TICKS_PER_RADIAN_OF_THE_ROTATOR, System.currentTimeMillis()) * .2);
   }
 
 

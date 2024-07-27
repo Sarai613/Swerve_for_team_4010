@@ -9,18 +9,18 @@ import frc.robot.susbsystems.Swerve;
 import frc.robot.utilidades.Constants;
 
 public class RobotContainer {
-
-    private final Swerve swerve = new Swerve();
     private final Joystick driverJoystick = new Joystick(Constants.DRIVER_PORT);
-    private final TrajectoryFollower trajectoryFollower = new TrajectoryFollower(swerve);
-
-    public RobotContainer(){
+    private final TrajectoryFollower trajectoryFollower;
+    
+    public RobotContainer(Swerve swerve){
         swerve.setDefaultCommand(new SwerveDriveJoystick(
             swerve,
             () -> driverJoystick.getRawAxis(Constants.DRIVER_X_AXIS),
             () -> -driverJoystick.getRawAxis(Constants.DRIVER_Y_AXIS),
             () -> driverJoystick.getRawAxis(Constants.DRIVER_Z_AXIS),
             () -> !driverJoystick.getRawButton(Constants.DRIVER_ROBOT_ORIENTED_BUTTON)));
+
+        trajectoryFollower = new TrajectoryFollower(swerve);
 
         configureButtonBindings();
     }
