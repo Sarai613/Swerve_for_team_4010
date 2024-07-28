@@ -3,6 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.autonomous.TrajectoryFollower;
+import frc.robot.commands.IntakeJoystick;
+import frc.robot.commands.ShooterJoystick;
 import frc.robot.commands.SwerveDriveJoystick;
 import frc.robot.commands.Test;
 import frc.robot.susbsystems.Intake;
@@ -22,8 +24,18 @@ public class RobotContainer {
             () -> -driverJoystick.getRawAxis(Constants.DRIVER_Y_AXIS),
             () -> driverJoystick.getRawAxis(Constants.DRIVER_Z_AXIS),
             () -> !driverJoystick.getRawButton(Constants.DRIVER_ROBOT_ORIENTED_BUTTON)));
+        
+        intake.setDefaultCommand(new IntakeJoystick(
+            intake, 
+            () -> coDriverJoystick.getRawButton(Constants.ACTIVATE_INTAKE_AXIS), 
+            () -> coDriverJoystick.getRawButton(Constants.INVERSE_INTAKE_ACTIVATION_AXIS)));
 
-            
+        shooter.setDefaultCommand(new ShooterJoystick(
+            shooter, 
+            () -> coDriverJoystick.getRawButton(Constants.ACTIVATE_SHOOTER_RELOADER_AXIS), 
+            () -> coDriverJoystick.getRawButton(Constants.ACTIVATE_SHOOTER_FLYING_WHEEL_AXIS), 
+            () -> coDriverJoystick.getRawButton(Constants.ACTIVATE_SHOOTER_AXIS), 
+            () -> coDriverJoystick.getRawAxis(Constants.SHOOTER_ROTATOR_STICK_AXIS)));
 
         trajectoryFollower = new TrajectoryFollower(swerve);
 
