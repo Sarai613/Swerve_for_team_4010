@@ -14,6 +14,8 @@ public class IntakeJoystick extends Command{
         this.intake = intake;
         this.activate_intake = activate_intake;
         this.inverse_intake_activation = inverse_intake_activation;
+
+        addRequirements(intake);
     }
 
     @Override

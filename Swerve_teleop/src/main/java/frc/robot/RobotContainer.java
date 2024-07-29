@@ -16,6 +16,7 @@ public class RobotContainer {
     private final Joystick driverJoystick = new Joystick(Constants.DRIVER_PORT);
     private final Joystick coDriverJoystick = new Joystick(Constants.CODRIVER_PORT);
     private final TrajectoryFollower trajectoryFollower;
+    private final Test test_command;
     
     public RobotContainer(Swerve swerve, Intake intake, Shooter shooter){
         swerve.setDefaultCommand(new SwerveDriveJoystick(
@@ -37,6 +38,8 @@ public class RobotContainer {
             () -> coDriverJoystick.getRawButton(Constants.ACTIVATE_SHOOTER_AXIS), 
             () -> coDriverJoystick.getRawAxis(Constants.SHOOTER_ROTATOR_STICK_AXIS)));
 
+        test_command = new Test(intake, shooter);
+
         trajectoryFollower = new TrajectoryFollower(swerve);
 
         configureButtonBindings();
@@ -51,6 +54,6 @@ public class RobotContainer {
     }
 
     public Command getTestCommand(){
-        return new Test();
+        return test_command;
     }
 }

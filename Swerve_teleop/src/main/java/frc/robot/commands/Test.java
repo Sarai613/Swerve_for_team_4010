@@ -12,11 +12,16 @@ import frc.robot.susbsystems.TejuinoBoard;
 
 public class Test extends Command{
 
-    Intake intake = new Intake();
-    Shooter shooter = new Shooter();
+    Intake intake;
+    Shooter shooter;
     TejuinoBoard tejuinoBoard = new TejuinoBoard(0);
     ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     boolean finished = false;
+
+    public Test(Intake intake, Shooter shooter){
+        this.intake = intake;
+        this.shooter = shooter;
+    }
 
     @Override
     public void initialize() {

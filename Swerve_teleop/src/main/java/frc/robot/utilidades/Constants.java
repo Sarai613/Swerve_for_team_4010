@@ -67,10 +67,10 @@ public class Constants {
     public static final int DRIVER_ROBOT_ORIENTED_BUTTON = 20;
 
     public static final int CODRIVER_PORT = 2;  
-    public static final int ACTIVATE_INTAKE_AXIS = 23;
-    public static final int INVERSE_INTAKE_ACTIVATION_AXIS = 54;
-    public static final int ACTIVATE_SHOOTER_RELOADER_AXIS = 65;
-    public static final int ACTIVATE_SHOOTER_FLYING_WHEEL_AXIS = 47;
-    public static final int ACTIVATE_SHOOTER_AXIS = 245;
-    public static final int SHOOTER_ROTATOR_STICK_AXIS = 54;
+    public static final int ACTIVATE_INTAKE_AXIS = 5;
+    public static final int INVERSE_INTAKE_ACTIVATION_AXIS = 6;
+    public static final int ACTIVATE_SHOOTER_RELOADER_AXIS = 8;
+    public static final int ACTIVATE_SHOOTER_FLYING_WHEEL_AXIS = 7;
+    public static final int ACTIVATE_SHOOTER_AXIS = 1;
+    public static final int SHOOTER_ROTATOR_STICK_AXIS = 1;
 }

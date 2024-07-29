@@ -31,11 +31,11 @@ public class Shooter extends SubsystemBase {
   PhoenixPIDController rotatorPIDController = new PhoenixPIDController(1, 0.2, 15);
 
   public void chargeLauncher(){
-    shooter_launcher.set(TalonSRXControlMode.PercentOutput, lRateLimiter.calculate(.5));
+    shooter_launcher.set(TalonSRXControlMode.PercentOutput, lRateLimiter.calculate(1));
   }
 
   public void reload(){
-      shooter_launcher.set(TalonSRXControlMode.PercentOutput, rRateLimiter.calculate(.5));
+      shooter_launcher.set(TalonSRXControlMode.PercentOutput, rRateLimiter.calculate(.8));
   }
 
   public void moveBoth(){

@@ -4,12 +4,10 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.susbsystems.Intake;
 import frc.robot.susbsystems.Shooter;
 import frc.robot.utilidades.Constants;
 
 public class ShooterJoystick extends Command{
-    Intake intake;
     Shooter shooter;
     Supplier<Boolean> activate_shooter_reloader, activate_shooter_flying_wheel, activate_shooter;
     Supplier<Double> rotator_power;
@@ -20,10 +18,12 @@ public class ShooterJoystick extends Command{
     Supplier<Boolean> activate_shooter, Supplier<Double> rotator_power){
         this.shooter = shooter;
         this.activate_shooter_reloader = activate_shooter_reloader;
-        this.activate_shooter_reloader = activate_shooter_flying_wheel;
+        this.activate_shooter_flying_wheel = activate_shooter_flying_wheel;
         this.activate_shooter = activate_shooter;
         this.rotator_power = rotator_power;
+        addRequirements(shooter);
     }
+
 
     @Override
     public void execute(){
@@ -57,7 +57,6 @@ public class ShooterJoystick extends Command{
 
     @Override
     public void end(boolean interrupted){
-        intake.stop();
         shooter.stop();
     }
 
