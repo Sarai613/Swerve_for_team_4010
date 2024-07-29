@@ -64,7 +64,7 @@ public class Constants {
     public static final int DRIVER_X_AXIS = 0;
     public static final int DRIVER_Y_AXIS = 3;
     public static final int DRIVER_Z_AXIS = 2;
-    public static final int DRIVER_ROBOT_ORIENTED_BUTTON = 20;
+    public static final int DRIVER_ROBOT_ORIENTED_BUTTON = 4;
 
     public static final int CODRIVER_PORT = 2;  
     public static final int ACTIVATE_INTAKE_AXIS = 5;
