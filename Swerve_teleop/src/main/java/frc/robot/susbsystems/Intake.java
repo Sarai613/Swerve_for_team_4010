@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
@@ -24,16 +25,19 @@ public class Intake extends SubsystemBase {
   public void take(){
     intake_front_wheel.set(fRateLimiter.calculate(1));
     intake_back_wheel.set(bRateLimiter.calculate(1));
+    SmartDashboard.putString("intake status", "activando el intake para agarrar");
   }
 
   public void stop(){
     intake_front_wheel.set(0);
     intake_back_wheel.set(0);
+    SmartDashboard.putString("intake status", "deteniendo el intake");
   }
 
   public void give(){
     intake_front_wheel.set(fRateLimiter.calculate(-1));
     intake_back_wheel.set(bRateLimiter.calculate(-1));
+    SmartDashboard.putString("intake status", "activando el intake para regresar");
   }
   
   @Override

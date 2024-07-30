@@ -22,11 +22,7 @@ public class IntakeJoystick extends Command{
     public void execute(){
         if (activate_intake.get()) {
             intake.take();
-        } else {
-            intake.stop();
-        }
-        
-        if (inverse_intake_activation.get()) {
+        } else if (inverse_intake_activation.get()){
             intake.give();
         } else {
             intake.stop();

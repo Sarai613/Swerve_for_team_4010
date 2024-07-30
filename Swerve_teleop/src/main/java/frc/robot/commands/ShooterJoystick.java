@@ -29,24 +29,12 @@ public class ShooterJoystick extends Command{
     public void execute(){
         if (activate_shooter_reloader.get()){
             shooter.reload();
-        } else {
-            shooter.stopRollers();
-        }
-
-        if (activate_shooter_flying_wheel.get()){
+        } else if (activate_shooter_flying_wheel.get()){
             shooter.chargeLauncher();
+        } else if  (activate_shooter.get()){
+            shooter.moveBoth();
         } else {
             shooter.stopRollers();
-        }
-
-        if  (activate_shooter.get()){
-            if (activate_shooter_reloader.get() && !activate_shooter_flying_wheel.get()){
-                shooter.chargeLauncher();
-            }
-
-            if (activate_shooter_flying_wheel.get() && !activate_shooter_reloader.get()){
-                shooter.reload();
-            }
         }
 
         double real_rotator_power = rotator_power.get();
