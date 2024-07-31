@@ -50,6 +50,10 @@ public class SwerveModule {
 
         // Set The encoders into 0 position
         resetEncoders();
+
+        if (absolute_encoder.getDeviceID() == 13) {
+            turning_motor.setInverted(false);
+        }
     }
 
     // Returns a SwerveModuleState object with the module state
@@ -113,11 +117,15 @@ public class SwerveModule {
         // Assigns a speed to the drive motor
         drive_motor.set(state.speedMetersPerSecond / Constants.MAX_SPEED);
 
+        if (absolute_encoder.getDeviceID() == 13) {
+            SmartDashboard.putNumber("PID", turning_PID_controller.calculate(turning_motor_position, state.angle.getRadians()));
+        }
         // Calculates the necessary set speed for turning the turning motor the specified angle
         turning_motor.set(turning_PID_controller.calculate(turning_motor_position, state.angle.getRadians()));
+        //SmartDashboard.putNumber("PID", absolute_encoder.getDeviceID());
 
         // Prints the swerve status
-        SmartDashboard.putString("Debug", "absolute encoder angle" + absolute_encoder.getAbsolutePosition().getValue().toString());
+        SmartDashboard.putString("Debug", "absolute encoder angle" + absolute_encoder.getAbsolutePosition().getValue().toString() + "id: " + absolute_encoder.getDeviceID());
 
 
         

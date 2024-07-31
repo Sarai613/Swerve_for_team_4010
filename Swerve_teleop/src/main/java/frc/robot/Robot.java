@@ -36,8 +36,6 @@ public class Robot extends TimedRobot {
   StructArrayPublisher<SwerveModuleState> swerve_state_publisher = NetworkTableInstance.getDefault()
         .getStructArrayTopic("MyStates", SwerveModuleState.struct).publish();
 
-  StructArrayPublisher<SwerveModuleState> swerve_desired_state_publisher = NetworkTableInstance.getDefault()
-        .getStructArrayTopic("desiredStates", SwerveModuleState.struct).publish();
 
 
   StructPublisher<Pose2d> odometry_publisher = NetworkTableInstance.getDefault()
@@ -62,7 +60,6 @@ public class Robot extends TimedRobot {
         swerve.updateOdometry();
         swerve.updateModuleStates();
         swerve_state_publisher.set(swerve.swerve_module_states);
-        swerve_desired_state_publisher.set(swerve.moduleStates);
         odometry_publisher.set(swerve.getPose());
         odometry_end_publisher.set(new Pose2d(4, -2, Rotation2d.fromDegrees(180)));
         mid_points_publisher.set(mid_points);

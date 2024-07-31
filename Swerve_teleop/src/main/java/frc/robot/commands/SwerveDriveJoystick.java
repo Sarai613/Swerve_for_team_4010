@@ -5,6 +5,8 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.susbsystems.Swerve;
 import frc.robot.utilidades.Constants;
@@ -14,6 +16,8 @@ public class SwerveDriveJoystick extends Command{
     private final Supplier<Double> x, y, z;
     private final Supplier<Boolean> field_relative;
     private final SlewRateLimiter xLimiter, yLimiter, zLimiter;
+      StructArrayPublisher<SwerveModuleState> swerve_desired_state_publisher = NetworkTableInstance.getDefault()
+        .getStructArrayTopic("desiredStates", SwerveModuleState.struct).publish();
 
     public SwerveDriveJoystick(Swerve swerve, 
     Supplier<Double> x, Supplier<Double> y, Supplier<Double> z,
@@ -58,8 +62,10 @@ public class SwerveDriveJoystick extends Command{
         }
 
         SwerveModuleState[] moduleStates = swerve.robot_kinematics.toSwerveModuleStates(chassisSpeeds);
-
+        
         swerve.setStates(moduleStates);
+
+        swerve_desired_state_publisher.set(moduleStates);
     }
 
     @Override
