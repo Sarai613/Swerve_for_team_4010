@@ -61,8 +61,8 @@ public class Constants {
 
     //constants for the controllers 
     public static final int DRIVER_PORT = 1;
-    public static final int DRIVER_X_AXIS = 0;
-    public static final int DRIVER_Y_AXIS = 1;
+    public static final int DRIVER_X_AXIS = 1;
+    public static final int DRIVER_Y_AXIS = 0;
     public static final int DRIVER_Z_AXIS = 2;
     public static final int DRIVER_ROBOT_ORIENTED_BUTTON = 4;
 
