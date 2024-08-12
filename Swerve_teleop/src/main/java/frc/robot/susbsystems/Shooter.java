@@ -13,8 +13,8 @@ import frc.robot.utilidades.Constants;
 public class Shooter extends SubsystemBase {
 
   public final TalonSRX shooter_launcher = new TalonSRX(4);
-  public final TalonSRX shooter_reloader = new TalonSRX(1);
-  public final TalonSRX shooter_spin_motor = new TalonSRX(2);
+  public final TalonSRX shooter_reloader = new TalonSRX(2);
+  public final TalonSRX shooter_spin_motor = new TalonSRX(1);
   public final TalonSRX shooter_spin_motor_2 = new TalonSRX(3);
   private final SlewRateLimiter lRateLimiter = new SlewRateLimiter(3);
   private final SlewRateLimiter rRateLimiter = new SlewRateLimiter(3);
@@ -105,8 +105,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setRotatorPower(double power){
-    shooter_spin_motor.set(TalonSRXControlMode.PercentOutput, power);
-    shooter_spin_motor_2.set(TalonSRXControlMode.PercentOutput, power);
+    shooter_spin_motor.set(TalonSRXControlMode.PercentOutput, -power);
+    shooter_spin_motor_2.set(TalonSRXControlMode.PercentOutput, -power);
     SmartDashboard.putString("rotator status", "moviendo el rotor");
   }
 

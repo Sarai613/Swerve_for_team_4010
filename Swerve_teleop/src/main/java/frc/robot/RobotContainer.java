@@ -18,18 +18,18 @@ public class RobotContainer {
     private final TrajectoryFollower trajectoryFollower;
     private final Test test_command;
     
-    public RobotContainer(Swerve swerve, Intake intake, Shooter shooter){
+    public RobotContainer(Swerve swerve, Shooter shooter){
         swerve.setDefaultCommand(new SwerveDriveJoystick(
             swerve,
             () -> driverJoystick.getRawAxis(Constants.DRIVER_X_AXIS),
-            () -> -driverJoystick.getRawAxis(Constants.DRIVER_Y_AXIS),
+            () -> driverJoystick.getRawAxis(Constants.DRIVER_Y_AXIS),
             () -> driverJoystick.getRawAxis(Constants.DRIVER_Z_AXIS),
             () -> !driverJoystick.getRawButton(Constants.DRIVER_ROBOT_ORIENTED_BUTTON)));
         
-        intake.setDefaultCommand(new IntakeJoystick(
-            intake, 
-            () -> coDriverJoystick.getRawButton(Constants.ACTIVATE_INTAKE_AXIS), 
-            () -> coDriverJoystick.getRawButton(Constants.INVERSE_INTAKE_ACTIVATION_AXIS)));
+        //intake.setDefaultCommand(new IntakeJoystick(
+        //    intake, 
+        //    () -> coDriverJoystick.getRawButton(Constants.ACTIVATE_INTAKE_AXIS), 
+        //    () -> coDriverJoystick.getRawButton(Constants.INVERSE_INTAKE_ACTIVATION_AXIS)));
 
         shooter.setDefaultCommand(new ShooterJoystick(
             shooter, 
@@ -38,7 +38,7 @@ public class RobotContainer {
             () -> coDriverJoystick.getRawButton(Constants.ACTIVATE_SHOOTER_AXIS), 
             () -> coDriverJoystick.getRawAxis(Constants.SHOOTER_ROTATOR_STICK_AXIS)));
 
-        test_command = new Test(intake, shooter);
+        test_command = new Test(shooter);
 
         trajectoryFollower = new TrajectoryFollower(swerve);
 

@@ -21,9 +21,9 @@ import frc.robot.susbsystems.Swerve;
 
 public class Robot extends TimedRobot {
   private final Swerve swerve = new Swerve();
-  private final Intake intake = new Intake();
+  //private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
-  RobotContainer robotContainer = new RobotContainer(swerve, intake, shooter);
+  RobotContainer robotContainer = new RobotContainer(swerve, shooter);
   Command test_command = robotContainer.getTestCommand();
   Command autonomous_command = robotContainer.getAutonomousCommand();
   Translation2d[] mid_points = {

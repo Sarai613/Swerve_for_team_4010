@@ -20,7 +20,7 @@ public class Constants {
     public static final double TURNING_ENCODER_ROT_2_RAD = TURNING_MOTOR_GEAR_RATIO * 2 * Math.PI;
     public static final double TURNING_ENCODER_RPM_2_RAD_PER_SECOND = RPM / 60 * TURNING_ENCODER_ROT_2_RAD;
     public static final double P = 0.217; //PID P value
-    public static final double I = 0.015; //PID I value
+    public static final double I = 0; //PID I value
     public static final double D = 0; //PID D value
     public static final double JOYSTICK_DEADZONE = 0.09;//this value most be beetwen 0 and 1
 

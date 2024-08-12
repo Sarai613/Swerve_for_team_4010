@@ -12,14 +12,12 @@ import frc.robot.susbsystems.TejuinoBoard;
 
 public class Test extends Command{
 
-    Intake intake;
     Shooter shooter;
     TejuinoBoard tejuinoBoard = new TejuinoBoard(0);
     ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     boolean finished = false;
 
-    public Test(Intake intake, Shooter shooter){
-        this.intake = intake;
+    public Test(Shooter shooter){
         this.shooter = shooter;
     }
 
@@ -30,11 +28,11 @@ public class Test extends Command{
 
     @Override
     public void execute(){
-        shooter.setRotatorPower(.1);
+        shooter.setRotatorPower(1);
         scheduler.schedule(() -> {
                 // Code to run after the delay
-                shooter.setRotatorPower(-.1);
-            }, 2, TimeUnit.SECONDS);
+                shooter.setRotatorPower(-1);
+            }, 1, TimeUnit.SECONDS);
     }
 
     @Override
