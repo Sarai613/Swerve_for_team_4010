@@ -17,10 +17,10 @@ import frc.robot.utilidades.SwerveModule;
 public class Swerve extends SubsystemBase{
 
     //Defines every single module by giving the drive spark id, the turning spark id, the absolute encoder id, absolute encoder offset, is inverted
-    private final SwerveModule frontLeft = new SwerveModule(17, 33, 11,0, false);
-    private final SwerveModule frontRight = new SwerveModule(31, 22, 10,0, true);
-    private final SwerveModule backLeft = new SwerveModule(15, 18, 13, 0, true);
-    private final SwerveModule backRight = new SwerveModule(21, 23, 12,  0, false);
+    private final SwerveModule frontLeft = new SwerveModule(1, 15, 11,0, false);
+    private final SwerveModule frontRight = new SwerveModule(18, 21, 10,0, true);
+    private final SwerveModule backLeft = new SwerveModule(34, 17, 13, 0, true);
+    private final SwerveModule backRight = new SwerveModule(31, 22, 12,  0, false);
 
     private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 

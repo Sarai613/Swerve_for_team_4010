@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
 
-  private final CANSparkMax intake_front_wheel = new CANSparkMax(24, MotorType.kBrushless);
+  private final CANSparkMax intake_front_wheel = new CANSparkMax(33, MotorType.kBrushless);
   private final CANSparkMax intake_back_wheel = new CANSparkMax(23, MotorType.kBrushless);
   private final SlewRateLimiter fRateLimiter = new SlewRateLimiter(3);
   private final SlewRateLimiter bRateLimiter = new SlewRateLimiter(3);
