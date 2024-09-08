@@ -3,7 +3,7 @@ package frc.robot.utilidades;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
-public class Constants {
+public final class Constants {
     public static final double WHEEL_DIAMETER = 0.09; //in meters
     public static final double TRACK = .576; //in meters
     public static final double WHEELBASE = .436; //in meters
@@ -55,8 +55,8 @@ public class Constants {
 
 
     // Constants for the shooter
-
-    public static final double TICKS_PER_RADIAN_OF_THE_ROTATOR = 56;
+    public static final double ROTOR_ENCODER_POSITION_2_RADIAN = 2;
+    public static final double LAUNCHER_MAX_VELOCITY = 1; //in meters per second
 
 
     //constants for the controllers 
@@ -73,4 +73,14 @@ public class Constants {
     public static final int ACTIVATE_SHOOTER_FLYING_WHEEL_AXIS = 7;
     public static final int ACTIVATE_SHOOTER_AXIS = 1;
     public static final int SHOOTER_ROTATOR_STICK_AXIS = 1;
+
+    // Auto aligner constants
+    public static final double MAX_DISTANCE = 10; //in meters
+    public static final double SPEAKER_HEIGHT = 1.5; //in meters
+    public static final double MAX_INITIAL_VELOCITY = 1.5; //in meters per second
+
+    public static final class HardwareMap {
+        public static final int ROTOR_ENCODER_ID = 5;
+    }
 }
+

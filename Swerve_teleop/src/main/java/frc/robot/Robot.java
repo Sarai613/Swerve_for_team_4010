@@ -24,7 +24,6 @@ public class Robot extends TimedRobot {
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
   RobotContainer robotContainer = new RobotContainer(swerve, intake, shooter);
-  Command test_command = robotContainer.getTestCommand();
   Command autonomous_command = robotContainer.getAutonomousCommand();
   Translation2d[] mid_points = {
     new Translation2d(0, 0),
@@ -96,7 +95,6 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit(){
     CommandScheduler.getInstance().cancelAll();
-    test_command.schedule();
   }
 
 }

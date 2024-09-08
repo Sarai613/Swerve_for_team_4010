@@ -2,11 +2,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.autonomous.TrajectoryFollower;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.IntakeJoystick;
 import frc.robot.commands.ShooterJoystick;
 import frc.robot.commands.SwerveDriveJoystick;
-import frc.robot.commands.Test;
+import frc.robot.commands.TrajectoryFollower;
 import frc.robot.susbsystems.Intake;
 import frc.robot.susbsystems.Shooter;
 import frc.robot.susbsystems.Swerve;
@@ -16,9 +17,11 @@ public class RobotContainer {
     private final Joystick driverJoystick = new Joystick(Constants.DRIVER_PORT);
     private final Joystick coDriverJoystick = new Joystick(Constants.CODRIVER_PORT);
     private final TrajectoryFollower trajectoryFollower;
-    private final Test test_command;
+    private Swerve swerve;
     
     public RobotContainer(Swerve swerve, Intake intake, Shooter shooter){
+        this.swerve = swerve;
+
         swerve.setDefaultCommand(new SwerveDriveJoystick(
             swerve,
             () -> driverJoystick.getRawAxis(Constants.DRIVER_X_AXIS),
@@ -38,22 +41,17 @@ public class RobotContainer {
             () -> coDriverJoystick.getRawButton(Constants.ACTIVATE_SHOOTER_AXIS), 
             () -> coDriverJoystick.getRawAxis(Constants.SHOOTER_ROTATOR_STICK_AXIS)));
 
-        test_command = new Test(intake, shooter);
-
         trajectoryFollower = new TrajectoryFollower(swerve);
 
         configureButtonBindings();
     }
 
     private void configureButtonBindings(){
-        //new JoystickButton(driverJoystick, 2).whenPressed(() -> swerve.zeroHeading());
+        new JoystickButton(driverJoystick, 2).whileTrue(new InstantCommand(() -> swerve.zeroHeading()));
     }
 
     public Command getAutonomousCommand(){
         return trajectoryFollower.getAutonomousCommand();
     }
 
-    public Command getTestCommand(){
-        return test_command;
-    }
 }

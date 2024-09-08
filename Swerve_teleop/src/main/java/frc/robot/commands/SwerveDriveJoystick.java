@@ -16,7 +16,7 @@ public class SwerveDriveJoystick extends Command{
     private final Supplier<Double> x, y, z;
     private final Supplier<Boolean> field_relative;
     private final SlewRateLimiter xLimiter, yLimiter, zLimiter;
-      StructArrayPublisher<SwerveModuleState> swerve_desired_state_publisher = NetworkTableInstance.getDefault()
+    StructArrayPublisher<SwerveModuleState> swerve_desired_state_publisher = NetworkTableInstance.getDefault()
         .getStructArrayTopic("desiredStates", SwerveModuleState.struct).publish();
 
     public SwerveDriveJoystick(Swerve swerve, 

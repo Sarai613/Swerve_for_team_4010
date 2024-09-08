@@ -1,4 +1,4 @@
-package frc.robot.autonomous;
+package frc.robot.commands;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import frc.robot.utilidades.Constants;
 
 public class TrajectoryFollower {
     private TrajectoryConfig trajectory_config;
-    private Trajectory trajectory;
+    public Trajectory trajectory;
     private PIDController x_controller;
     private PIDController y_controller;
     private ProfiledPIDController z_controller;
